@@ -1,25 +1,14 @@
 # import json
-import os
+import importlib
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parents[2]))
 
-from dotenv import load_dotenv
-from groq import Groq
-
-# Look for .env in project root (2 levels up from script)
-DOTENV_PATH = Path(__file__).parents[2] / ".env"
-load_dotenv(dotenv_path=DOTENV_PATH)
-
-MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
-API_KEY = os.environ.get("GROQ_API_KEY")
-
-if not API_KEY:
-    raise SystemExit(
-        f"GROQ_API_KEY is missing. Add it to {DOTENV_PATH} or set it as an environment variable."
-    )
-
-client = Groq(api_key=API_KEY)
+config = importlib.import_module("config")
+MODEL = config.MODEL
+call_llm = config.call_llm
 
 PROMPTS = [
     "Explain why the sky is blue in 2 sentences.",
@@ -54,17 +43,14 @@ results = {
 for prompt in PROMPTS:
     entry = {"prompt": prompt, "responses": {}}
     for setting in SETTINGS:
-        response = client.chat.completions.create(
-            model=MODEL,
+        content, _, _ = call_llm(
+            system=SYSTEM_PROMPT,
+            user=prompt,
+            max_tokens=200,
             temperature=setting["temperature"],
             top_p=setting["top_p"],
-            max_tokens=200,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
+            label=setting["label"],
         )
-        content = response.choices[0].message.content.strip()
         entry["responses"][setting["label"]] = content
     results["prompts"].append(entry)
 
