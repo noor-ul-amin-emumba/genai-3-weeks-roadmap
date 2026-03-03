@@ -1,8 +1,109 @@
 # Week 1 - Day 1
 
-Implemented a prompt experiment with three decoding settings to understand how temperature affects LLM outputs.
+## Core Concepts
+
+### 1. Next-Token Prediction & Logits → Decoding
+
+**How LLMs generate text:**
+
+1. Model receives tokenized input
+2. For each position, model outputs **logits** (raw scores for all possible next tokens)
+3. Logits are converted to **probabilities** using softmax
+4. A token is **sampled** based on these probabilities (controlled by temperature/top-p)
+5. Selected token is **decoded** back to text and added to output
+6. Process repeats until stopping condition
+
+**Example:** Given "The cat sat on the", model assigns probabilities:
+
+- "mat" = 0.45
+- "floor" = 0.30
+- "chair" = 0.15
+- etc.
+
+### 2. Why Models Hallucinate
+
+#### Root cause: Optimization target ≠ truth
+
+LLMs are trained to predict the next most _plausible_ token, not the next most _truthful_ token.
+
+- ✅ Trained on: statistical patterns in text (what words typically follow other words)
+- ❌ Not trained on: factual accuracy or verifying truth
+
+**Result:** The model can confidently generate fluent, grammatically correct text that is completely false.
+
+**Example:** If asked about a fake person, the model might generate a plausible-sounding biography because it's optimizing for "what would a biography look like" rather than "is this person real."
+
+### 3. Common Terms
+
+**System Prompt:**
+
+- Instructions given to the model that set its behavior/role
+- Processed before user input
+- Examples: "You are a helpful assistant", "You are a Python expert"
+- Can override user intent if conflicts arise
+
+**Instruction Tuning:**
+
+- Fine-tuning process where models learn to follow instructions
+- Trained on (instruction, response) pairs
+- Makes models better at following commands rather than just completing text
+- Trade-off: models optimized for following instructions, not necessarily for truth
+
+**Temperature:**
+
+- Controls randomness in token selection
+- Low (0-0.3): deterministic, focused
+- High (0.8-1.0): creative, diverse, more hallucination risk
+
+**Top-p (nucleus sampling):**
+
+- Limits token selection to top X% probability mass
+- Example: top_p=0.9 means "only sample from tokens that make up 90% of probability"
+- Provides more stable diversity control than temperature alone
+
+### 4. Tokens vs Words & BPE Intuition
+
+**Tokens ≠ Words:**
+
+- Common words = 1 token ("cat", "the")
+- Uncommon words = multiple tokens ("antidisestablishmentarianism" → 5+ tokens)
+- Subwords = 1 token ("ing", "un")
+
+**BPE (Byte-Pair Encoding) — How vocabularies are built:**
+
+Starting corpus: `"the cat sat on the mat"`
+
+1. **Initialize:** Each character is a token: `[t, h, e, c, a, s, o, n, m]`
+2. **Find most frequent pair:** "t" + "h" appears twice → merge into "th"
+3. **Update vocabulary:** `[th, e, c, a, s, o, n, m]` + merge rule `("t", "h") → "th"`
+4. **Repeat:** Next most frequent is "th" + "e" → merge into "the"
+5. **Continue** until vocabulary reaches target size (e.g., 50k tokens)
+
+**Result:** Model learns common subword patterns that minimize token count for frequent text.
+
+### 5. Why JSON/Code/URLs/Multilingual Text Explode Tokens
+
+**Common patterns:**
+
+| Text Type        | Why Token Count Increases                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| **JSON**         | Braces `{}`, quotes `""`, commas create separate tokens; keys fragment                    |
+| **Code**         | Operators (`::`, `->`, `==`), special chars, indentation not in natural language vocab    |
+| **URLs**         | Slashes `/`, percent-encoding `%20`, domain fragments rarely seen together                |
+| **Multilingual** | Non-English scripts (Arabic, Chinese, Hindi) trained on less data → smaller subword units |
+| **Emojis**       | Encoded as multiple bytes → split into many tokens by byte-level BPE                      |
+
+**Example from our tokenization comparison:**
+
+- `"Hello"` = 1 token (common English)
+- `"مرحبا"` (Arabic "hello") = 3-5 tokens (less common in training data)
+- `"https://example.com/api?key=123"` = 15+ tokens (special chars fragment)
+
+**Bottom line:** Token count depends on how similar your text is to the model's training data.
 
 ## LLM behavior cheatsheet
+
+Implemented a prompt experiment with three decoding settings to understand how temperature affects LLM outputs.
 
 Findings
 
