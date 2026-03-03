@@ -139,28 +139,24 @@ Efficient usage could be:
 
 ### Tokens
 
-Here’s a **clear, concise, interview-ready version** of your explanation:
-
----
-
 ## Tokens in LLMs — Concise Summary
 
 **Tokens = the units of text an LLM understands.**
 They are numeric representations of words or parts of words.
 
-### 🔹 Encoding & Decoding
+**Encoding & Decoding**
 
 - **Encoding:** Text → tokens → numbers
 - **Decoding:** Numbers → tokens → readable text
 
-### 🔹 LLM Flow
+**LLM Flow**
 
 1. Input text is **tokenized**
 2. Model **processes tokens**
 3. Model generates **output tokens**
 4. Tokens are **decoded into text**
 
-### 🔹 What you are billed for
+**What you are billed for**
 
 - **Input tokens:** prompt + chat history + system instructions + tools
 - **Output tokens:** model’s response
@@ -168,7 +164,7 @@ They are numeric representations of words or parts of words.
 
 ---
 
-## 🔹 How tokens are created
+**How tokens are created**
 
 Tokenizers learn from a large text corpus and build a **vocabulary of common patterns**:
 
@@ -184,7 +180,7 @@ This is why tokens can be:
 
 ---
 
-## 🔹 Vocabulary size effect
+**Vocabulary size effect**
 
 Larger vocabulary → **fewer tokens per word** → more efficient processing.
 
@@ -195,14 +191,14 @@ Example for **“understanding”**:
 
 ---
 
-## 🔹 Rare / made-up words
+**Rare / made-up words**
 
 Uncommon words aren’t in the vocabulary → split into **many smaller tokens**
 ➡️ more tokens → higher cost.
 
 ---
 
-## 🔹 Cost optimization tip
+**Cost optimization tip**
 
 Design prompts that:
 
