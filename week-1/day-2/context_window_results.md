@@ -1,6 +1,6 @@
 # Context Window Experiment Results
 
-**Model:** `llama-3.3-70b-versatile`  
+**Model:** `openai/gpt-oss-120b`  
 **Document:** `long_document.txt`  
 **Document size:** 25,348 chars | ~6,337 estimated tokens  
 **Context window limit (model):** 8,192 tokens  
@@ -10,9 +10,9 @@
 
 ## Strategy Descriptions
 
-| Strategy                      | Description                                                                                                                      |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **A – Naive Stuffing**        | Entire document + question sent in one API call. Simple but risks context pressure and 'lost-in-the-middle' degradation.         |
+| Strategy | Description |
+|---|---|
+| **A – Naive Stuffing** | Entire document + question sent in one API call. Simple but risks context pressure and 'lost-in-the-middle' degradation. |
 | **B – Summarize-then-Answer** | Document chunked by chapter → each chunk summarised (map) → summaries combined → question answered on combined summary (reduce). |
 
 ---
@@ -24,13 +24,13 @@
 ### Strategy A – Naive Stuffing
 
 **Status:** `ok`  
-**Prompt tokens (actual):** 5475  
+**Prompt tokens (actual):** 5484  
 **Estimated prompt tokens:** ~6427  
-**Completion tokens:** 45
+**Completion tokens:** 150  
 
 **Answer:**
 
-AI-enhanced climate models reduced 10-year precipitation forecast errors by 34% compared to traditional numerical weather prediction (NWP) models, as reported by Zhang et al. (2023) in Nature Climate Change.
+AI‑enhanced climate models cut 10‑year precipitation forecast errors by **34 %** compared with traditional NWP models. This result is reported in **Zhang et al., 2023, *Nature Climate Change***.
 
 **Failure / Warning Notes:**
 
@@ -39,13 +39,13 @@ AI-enhanced climate models reduced 10-year precipitation forecast errors by 34% 
 ### Strategy B – Summarize-then-Answer
 
 **Status:** `ok`  
-**Total API tokens (map + reduce):** 10521  
+**Total API tokens (map + reduce):** 10600  
 **Map chunks:** 11  
-**Approx reduce-prompt tokens:** ~2618
+**Approx reduce-prompt tokens:** ~1595  
 
 **Answer:**
 
-According to the EXECUTIVE SUMMARY, AI-enhanced climate models have reduced 10-year precipitation forecast errors by 34% compared to traditional models, as reported by Zhang et al. (2023) in Nature Climate Change.
+AI‑enhanced climate models reduced 10‑year precipitation forecast errors by **34 %** compared with traditional numerical weather prediction (NWP) models. This result is reported in **Zhang et al., 2023, *Nature Climate Change*** (see the **EXECUTIVE SUMMARY**).
 
 ---
 
@@ -56,13 +56,13 @@ According to the EXECUTIVE SUMMARY, AI-enhanced climate models have reduced 10-y
 ### Strategy A – Naive Stuffing
 
 **Status:** `ok`  
-**Prompt tokens (actual):** 5483  
+**Prompt tokens (actual):** 5492  
 **Estimated prompt tokens:** ~6434  
-**Completion tokens:** 49
+**Completion tokens:** 199  
 
 **Answer:**
 
-The median annual energy production (AEP) gain achieved by ML-optimised wind farm layouts was 14.2%, according to the meta-analysis of 47 European commercial wind projects by Osei & Lindqvist (2024).
+The meta‑analysis reported a **median annual energy‑production gain of 14.2 %**, based on **47 commercial wind‑farm projects**.
 
 **Failure / Warning Notes:**
 
@@ -71,116 +71,181 @@ The median annual energy production (AEP) gain achieved by ML-optimised wind far
 ### Strategy B – Summarize-then-Answer
 
 **Status:** `ok`  
-**Total API tokens (map + reduce):** 10563  
+**Total API tokens (map + reduce):** 10533  
 **Map chunks:** 11  
-**Approx reduce-prompt tokens:** ~2647
+**Approx reduce-prompt tokens:** ~1418  
 
 **Answer:**
 
-According to **CHAPTER 3: AI IN RENEWABLE ENERGY**, the median gain in annual energy production (AEP) achieved by ML-optimized wind farm layouts was 14.2%. This is based on a meta-analysis of 47 commercial wind projects, as cited in Osei & Lindqvist (2024).
+The report does not give a single median value for the energy‑production increase. It reports a **range of 11 %–18 % higher annual energy production** for machine‑learning‑optimised wind‑farm layouts (see the **Executive Summary**). The underlying meta‑analysis combined **47 European commercial wind‑farm projects** (also noted in the **Executive Summary** and reiterated in **Chapter 3**). Since a specific median figure is not stated in the summaries, it cannot be provided.
+
+---
+
+## Question 3
+
+> What are the four specific policy recommendations made in the Conclusion of the report?
+
+### Strategy A – Naive Stuffing
+
+**Status:** `ok`  
+**Prompt tokens (actual):** 5472  
+**Estimated prompt tokens:** ~6408  
+**Completion tokens:** 400  
+
+**Answer:**
+
+The report’s Conclusion lists four concrete policy recommendations:
+
+1. **Mandatory lifecycle carbon accounting** for all large‑scale climate‑AI deployments.  
+2. **Open‑access repositories for climate‑AI training data**, with a priority on expanding coverage for the Global South.  
+3. **Interpretability requirements** for
+
+**Failure / Warning Notes:**
+
+- WARNING: Estimated prompt tokens (6408) is high — context limit pressure likely.
+
+### Strategy B – Summarize-then-Answer
+
+**Status:** `ok`  
+**Total API tokens (map + reduce):** 10761  
+**Map chunks:** 11  
+**Approx reduce-prompt tokens:** ~1538  
+
+**Answer:**
+
+The Conclusion lists a set of concrete policy actions. Based on the summary, the first two are:
+
+1. **Mandatory lifecycle carbon accounting for large‑scale climate‑AI deployments**【Conclusion】  
+2. **Open‑access climate‑AI training‑data repositories, with priority given to coverage in the Global South**【Conclusion】
+
+The summary truncates the remainder of the list (it begins “Interpret
+
+---
+
+## Question 4
+
+> What are the three main limitations of AI in climate applications as described in Chapter 6? Provide at least one specific example for each.
+
+### Strategy A – Naive Stuffing
+
+**Status:** `ok`  
+**Prompt tokens (actual):** 5484  
+**Estimated prompt tokens:** ~6421  
+**Completion tokens:** 400  
+
+**Answer:**
+
+**Chapter 6 identifies three principal limitations of AI for climate work**
+
+| Limitation (Chapter 6) | What the report says | Concrete example from the text |
+|------------------------|----------------
+
+**Failure / Warning Notes:**
+
+- WARNING: Estimated prompt tokens (6421) is high — context limit pressure likely.
+
+### Strategy B – Summarize-then-Answer
+
+**Status:** `ok`  
+**Total API tokens (map + reduce):** 10777  
+**Map chunks:** 11  
+**Approx reduce-prompt tokens:** ~1525  
+
+**Answer:**
+
+
+
+**Failure / Warning Notes:**
+
+- Short answer — detail may have been lost during summarisation.
+
+---
+
+## Question 5
+
+> What is the projected GDP impact of a 2°C warming scenario on India according to this report?
+
+### Strategy A – Naive Stuffing
+
+**Status:** `ok`  
+**Prompt tokens (actual):** 5477  
+**Estimated prompt tokens:** ~6409  
+**Completion tokens:** 152  
+
+**Answer:**
+
+The report does not provide any information on the projected GDP impact of a 2 °C warming scenario for India.
+
+**Failure / Warning Notes:**
+
+- WARNING: Estimated prompt tokens (6409) is high — context limit pressure likely.
+
+### Strategy B – Summarize-then-Answer
+
+**Status:** `ok`  
+**Total API tokens (map + reduce):** 10516  
+**Map chunks:** 11  
+**Approx reduce-prompt tokens:** ~1530  
+
+**Answer:**
+
+The provided document summaries do not contain any information about the projected GDP impact of a 2 °C warming scenario on India.
 
 ---
 
 ## Appendix – Combined Chapter Summaries (Strategy B Map Output)
 
 ### Preamble
-
-Here is a concise summary of the section provided:
-
-- The report is titled "Artificial Intelligence in Climate Change Mitigation and Adaptation: A Comprehensive Technical and Policy Review".
-- The report is published by the Global Institute for Climate Technology (GICT) with the reference number ENV-2024-117.
-- The authors of the report are Dr. Priya Nair, Dr. Samuel Osei, and Dr. Lena Brandt, and it was published in September 2024.
+- **Report Overview**: “Artificial Intelligence in Climate Change Mitigation and Adaptation – A Comprehensive Technical and Policy Review” (Report No. ENV‑2024‑117) presents a systematic analysis of AI‑driven solutions for both reducing greenhouse‑gas emissions and enhancing
 
 ### EXECUTIVE SUMMARY
-
-Here is a concise summary of the section in 4 bullet points:
-
-- AI-enhanced climate models have reduced 10-year precipitation forecast errors by 34% compared to traditional models, as reported by Zhang et al. (2023) in Nature Climate Change.
-- Machine-learning-optimized wind-farm layouts have demonstrated 11-18% gains in annual energy yield over conventional designs, based on a meta-analysis of 47 commercial wind projects in Europe by Osei & Lindqvist (2024).
-- Satellite-based AI carbon-flux models can detect deforestation events within 72 hours at 10-metre spatial resolution, enabling near-real-time REDD+ verification, as shown by Nair et al. (2023) in Remote Sensing of Environment.
-- Climate-risk AI tools are being used by 12 central banks to cover assets worth $14.7 trillion, but deployment at scale requires attention to data quality, computational energy costs, interpretability, and equity considerations, particularly
+- AI‑enhanced climate models cut 10‑year precipitation forecast errors by **34%** versus traditional NWP (Zhang et al., 2023, *Nature Climate Change*).  
+- Machine‑learning optimization of wind‑farm layouts yields **11–18%** higher annual energy production, shown in a meta‑analysis of **47** European commercial projects (Osei & Lindqvist, 2024).  
+- Satellite‑based AI carbon‑flux models now identify deforestation within **72 hours** at **10 m** resolution, enabling near‑real‑time REDD+ verification (Nair et al., 2023, *Remote Sensing of Environment*).  
+- Climate‑risk AI tools used
 
 ### CHAPTER 1: INTRODUCTION
-
-Here is a concise summary of the section in 4 bullet points:
-
-- The Intergovernmental Panel on Climate Change (IPCC) reports that human influence has warmed the climate at an unprecedented rate, with average global surface temperatures reaching 1.45°C above the 1850-1900 pre-industrial baseline in 2023 (WMO Global Climate Report, 2024).
-- To limit warming to 1.5°C, global greenhouse gas (GHG) emissions need to be cut by approximately 43% by 2030 and reach net zero by 2050, according to the IPCC Sixth Assessment Report (2021).
-- This report covers the application of artificial intelligence (AI) to climate action, focusing on five domains: climate modelling and prediction, renewable energy, carbon monitoring, financial risk, and policy support, with a review of peer-reviewed literature and grey-literature reports from January 2019 to August 2024.
-- Key terminology used in the report
+- The IPCC Sixth Assessment Report (2021) confirms human‑driven warming, with 2023 global surface temperatures 1.45 °C above the 1850‑1900 pre‑industrial baseline (WMO Global Climate Report, 2024); limiting warming to 1.5 °C demands a ~43 % cut in GHG emissions by 2030 and net‑zero by 2050 (IPCC AR6, Ch. 4).  
+- AI is highlighted as a “force multiplier” for climate action because its pattern‑recognition capabilities can handle the petabytes of satellite, sensor, and model‑output data produced annually by climate science.  
+- This report reviews peer‑reviewed and grey‑literature from Jan 2019–Aug 202
 
 ### CHAPTER 2: AI IN CLIMATE MODELLING AND PREDICTION
+- **Traditional NWP limitations:** Operational systems like ECMWF’s IFS discretize the atmosphere into grid cells and need ~1,200 CPU‑core hours for a global 10‑day forecast, yet still rely on costly parameterisations to capture sub‑grid processes such as convective precipitation.  
 
-Here is a concise summary of the section in 4 bullet points:
-
-- Traditional numerical weather prediction (NWP) systems, such as the ECMWF's Integrated Forecasting System (IFS), are computationally expensive (1,200 CPU-core hours for a single 10-day forecast) and struggle to capture sub-grid-scale processes.
-- Data-driven models, such as Pangu-Weather, GraphCast, and FourCastNet, have demonstrated forecast skill comparable to or exceeding operational NWP at a fraction of the computational cost, with examples including:
-  - Pangu-Weather achieving lower root-mean-square error (RMSE) than IFS on 24/48/72-hour forecasts (Bi et al., 2023).
-  - GraphCast matching or exceeding IFS on 90.3% of atmospheric variables (Lam et al., 2023).
-  - FourCastNet being 45,000× faster than IFS for equivalent-resolution forecasts.
-- Machine learning (ML)
+- **Data‑driven forecasting breakthroughs:** *Pangu‑Weather* (Huawei, Bi et
 
 ### CHAPTER 3: AI IN RENEWABLE ENERGY
+- **Solar power forecasting:** Deep‑learning models (e.g., LSTM + attention) cut day‑ahead GHI RMSE by **22.4 % vs. NWP** across 12 German sites (Nie et al., 2022). SolarEdge’s proprietary ML reduced curtailment by **8.3 %** in 2023, adding ≈**430 GWh** of generation fleet‑wide.  
 
-Here are 4 concise bullet points summarizing the section on AI in Renewable Energy:
-
-- Solar power forecasting using deep-learning models, such as LSTM + attention models, has reduced day-ahead global horizontal irradiance (GHI) forecasting error by 22.4% (Nie et al., 2022) and curtailment at utility-scale farms by 8.3% (SolarEdge, 2023).
-- Wind energy optimization using physics-informed neural networks (PINNs) has achieved 97% accuracy in wake modeling, while ML-optimized layouts have resulted in 11-18% annual energy production (AEP) gains, with a median gain of 14.2% (Osei & Lindqvist, 2024).
-- Predictive maintenance using ML algorithms, such as random forests and gradient-boosted trees, has reduced unplanned turbine downtime by 25-40% (Tautz-Weinert & Watson, 2023), with costs
+- **Wind farm wake modeling & layout:** Physics‑informed neural networks achieve **97 % accuracy** vs. high‑fidelity CFD while running in milliseconds, addressing €1.2 bn/yr
 
 ### CHAPTER 4: AI IN CARBON MONITORING, REPORTING AND VERIFICATION (MRV)
+- **Deforestation monitoring:** The Global Forest Watch AI system (Hansen et al., 2013 → 2023) processes Sentinel‑2/Landsat data with multi‑temporal CNNs, achieving a mean detection latency of **68 h** (target < 72 h) and a **false‑positive rate of 4.1 %** (down from 11.3 % in 2019). Alerts are delivered at **10 m** (Sentinel‑2) and **30 m** (Landsat) resolution.  
 
-Here are the key points from the chapter on AI in Carbon Monitoring, Reporting, and Verification (MRV):
-
-- Deforestation and land-use change detection using AI platforms like Global Forest Watch (Hansen et al., 2013, updated 2023) can achieve a detection latency of 68 hours and a false positive rate of 4.1%, with a spatial resolution of 10-30m.
-- Methane emission detection using satellites like MethaneSAT (launched March 2024) and onboard ML inference can identify super-emitter plumes and suggest that reported emissions from the Permian Basin (USA) were underestimated by a factor of 1.8-2.4×.
-- Ocean carbon flux quantification using ML models trained on biogeochemical Argo float data and satellite sea-surface temperature and colour can reduce the uncertainty range of the ocean carbon sink estimate by 33%, from ±0.6 GtC/yr to ±0.4 G
+- **Cloud‑cover mitigation:** Nair et al. (2023, *Remote Sensing of Environment*) showed that SAR‑optical multi‑modal fusion
 
 ### CHAPTER 5: AI IN CLIMATE FINANCE AND RISK
-
-Here is a concise summary of the section on AI in climate finance and risk:
-
-- AI applications in physical risk assessment have shown promising results, including:
-  - Flood risk modelling: achieving 1-in-100-year coastal flood extents at building-level resolution in under 10 seconds (Wing et al., 2022)
-  - Wildfire spread prediction: ensemble ML models achieving 85% accuracy on 6-hour spread forecasts
-  - Heatwave mortality forecasting: gradient boosting models estimating excess deaths with cross-validated R² = 0.87 (Chen et al., 2023)
-- Transition risk modelling is also being explored, with NLP models extracting emissions-related disclosures from corporate filings and measuring climate ambition (Kölbel et al., 2022), covering $14.7 trillion in assets as of 2024
-- Limitations and concerns with AI in climate finance and risk include data vintage issues, model opacity, and double-counting of spatially correlated assets,
+- **AI‑driven physical risk tools** now deliver near‑real‑time, high‑resolution hazard forecasts: neural‑network hydraulic emulators generate 1‑in‑100‑year coastal flood maps at building level in <10 s (vs. ~6 h for full hydrodynamic models; Wing et al., 2022, *Nature Communications*), a system JPMorgan Chase rolled out in 2023 to cover $620 bn of real‑estate‑secured loans. Ensemble ML models for wildfire spread reach 85 % accuracy on 6‑hour forecasts and are used by Pacific Gas & Electric for pre‑emptive de‑energisation. Gradient‑boosting heat‑wave mortality models achieve cross‑validated R² = 0.87 (Chen
 
 ### CHAPTER 6: CHALLENGES AND LIMITATIONS
-
-Here is a concise summary of Chapter 6: Challenges and Limitations in 4 bullet points:
-
-- Data quality and coverage gaps exist, particularly in Sub-Saharan Africa and Southeast Asia, with under-reporting biases in historical emissions inventories and expensive ground-truth labels for supervised learning tasks.
-- Training large climate AI models has a significant carbon footprint, with a single 100-billion-parameter foundation model emitting an estimated 590 tCO2e (Patterson et al., 2022), and lifecycle analysis for AI climate applications is an underdeveloped research area.
-- Climate AI models face challenges in interpretability and trust, with many models not providing mechanistic understanding, and techniques like SHAP and LIME being computationally costly and limited in their ability to provide insights at scale.
-- Equity and access gaps exist, with climate-vulnerable nations in the Global South facing barriers to accessing and adapting climate AI tools due to costs, lack of locally relevant training data, and algorithmic biases, which
+- **Data gaps hinder model fidelity**: High‑resolution climate observations are sparse in Sub‑Saharan Africa and Southeast Asia, and emissions inventories systematically under‑report agriculture, waste, and informal industry, limiting supervised‑learning labels in data‑poor regions.  
+- **AI training itself emits CO₂**: A 100‑billion‑parameter climate foundation model can emit ≈ 590 tCO₂e per training run (Patterson et al., 2022, *Communications of the ACM*); continuous planetary‑scale remote‑sensing inference also incurs substantial energy use, and lifecycle analyses for AI climate tools remain underdeveloped.  
+- **Interpretability remains a barrier**: Post‑hoc methods such as SHAP and LIME are used for climate risk models,
 
 ### CHAPTER 7: FUTURE DIRECTIONS
+- **Foundation models for climate science:**  
+  - *ClimaX* (Nguyen et al., 2023, ICML) – a transformer pre‑trained on five CMIP6 ensembles + ERA5; fine‑tuning yields top‑1 scores on six ClimateBench tasks, showing strong transfer to new variables/regions.  
+  - *Earth‑2* (NVIDIA, 2024) – combines foundation‑model training with a digital‑twin pipeline to deliver metre‑scale urban climate projections.
 
-Here is a concise summary of the section in 4 bullet points:
-
-- Researchers are developing foundation models for climate science, such as ClimaX (Nguyen et al., 2023) and Earth-2 (NVIDIA, 2024), which have shown promising results in transfer learning to new climate variables and regions.
-- Active learning approaches, as demonstrated by Rolf et al. (2021), can reduce labeling costs by 60-70% for equivalent model performance in tasks like deforestation detection, by identifying the most informative unlabelled samples to query.
-- Federated and privacy-preserving learning methods are being explored to address data sensitivities, enabling cross-border collaborations in areas like crop yield modeling and flood risk pooling without compromising data security.
-- Large Language Models (LLMs) are being integrated into policy processes, such as drafting national adaptation plans and translating technical climate projections, but require human oversight to mitigate risks like hallucination of citations and exaggerated certainty.
+- **Active learning & human‑in‑the‑loop:**  
+  - By querying only the most informative unlabeled samples, active‑learning pipelines cut labeling effort by **60–70 %** while keeping performance on deforestation detection comparable (Rolf et
 
 ### CONCLUSION
+- AI can meaningfully accelerate climate mitigation and adaptation across the entire value chain—enhancing climate projections, renewable‑energy optimization, carbon monitoring, and climate‑risk finance—showing consistent gains over traditional methods in controlled studies.  
 
-Here is a concise summary of the section in 3-5 bullet points:
+- Major obstacles remain, including data gaps, high computational costs, limited interpretability, equity issues, and vulnerability to distribution shift; these require coordinated investment in research infrastructure, governance, and capacity building, especially in climate‑vulnerable nations.  
 
-- Artificial intelligence (AI) can accelerate climate change mitigation and adaptation across the value chain, with evidence showing consistent improvements over conventional methods in controlled evaluations.
-- However, AI deployment for climate action faces challenges such as data gaps, computational costs, and equity concerns, requiring coordinated investment in research infrastructure, governance frameworks, and capacity building.
-- The authors recommend key measures to support effective AI deployment, including:
-  - Mandatory lifecycle carbon accounting for large-scale climate AI deployments
-  - Open-access repositories for climate AI training datasets with Global South coverage
-  - Interpretability requirements for AI models in public-interest climate decisions
-  - International knowledge-transfer programmes to build AI capacity in climate-vulnerable nations.
+- The authors propose five actionable recommendations: (1) mandatory lifecycle carbon accounting for large‑scale climate‑AI projects; (2) open‑access climate AI training datasets with a focus on
 
 ### REFERENCES (SELECTED)
 
-Here is a concise summary of the references section in 3-5 bullet points:
-
-- The section cites various studies on climate change, weather forecasting, and energy systems, including a study by Bi et al. (2023) on accurate medium-range global weather forecasting with Pangu-Weather, and a study by Friedlingstein et al. (2023) on the Global Carbon Budget 2023.
-- Several studies focus on the application of machine learning and deep learning in climate and energy research, such as the use of reinforcement learning in power and energy systems (Cao et al., 2020), and the development of expert-labelled datasets for deep learning-based weather and climate analytics (Kashinath et al., 2021).
-- The references also include reports from major organizations, including the Intergovernmental Panel on Climate Change (IPCC, 2021) and the World Meteorological Organization (WMO, 2024), which provide assessments of the current state of

@@ -118,9 +118,9 @@ def strategy_naive(document: str, question: str) -> dict:
         if len(answer) < 80:
             notes.append(
                 "Suspiciously short answer — possible truncation effect.")
-        if approx_prompt_tokens > 6000:
+        if prompt_tok > 6000:
             notes.append(
-                f"WARNING: Estimated prompt tokens ({approx_prompt_tokens}) "
+                f"WARNING: Actual prompt tokens ({prompt_tok}) "
                 "is high — context limit pressure likely."
             )
 
