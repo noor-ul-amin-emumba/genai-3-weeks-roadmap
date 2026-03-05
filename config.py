@@ -59,6 +59,7 @@ def call_llm(
     temperature: float | None = None,
     top_p: float | None = None,
     label: str = "",
+    model: str | None = None,
 ) -> tuple[str, int, int]:
     """
     Call the Groq API with automatic retry and exponential backoff on rate limits.
@@ -71,6 +72,7 @@ def call_llm(
         temperature: Optional sampling temperature.
         top_p: Optional nucleus sampling value.
         label: Optional label for logging (helps identify which script/prompt called this).
+        model: Optional LLM model override (defaults to global MODEL).
 
     Returns:
         (response_text, prompt_tokens, completion_tokens)
@@ -79,6 +81,12 @@ def call_llm(
         HTTPStatusError: If API returns an unrecoverable error.
         RuntimeError: If max retries exceeded on rate limit.
     """
+
+    # print call details for debugging
+    label_suffix = f" {label}" if label else ""
+    print(
+        f"Calling LLM{label_suffix} with model '{model or MODEL}' and max_tokens={max_tokens}...")
+
     # Build messages list if not provided
     if messages is None:
         messages = []
@@ -94,7 +102,7 @@ def call_llm(
     for attempt in range(max_retries):
         try:
             request_kwargs = {
-                "model": MODEL,
+                "model": model or MODEL,
                 "max_tokens": max_tokens,
                 "messages": messages,
             }

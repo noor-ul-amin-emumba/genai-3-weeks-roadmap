@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "question": "Who organised the Dartmouth Conference in 1956 where the field of AI was formally founded?",
+    "ground_truth": "The Dartmouth Conference was organised by John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI History",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 2,
+    "question": "What is the Turing Test and who proposed it?",
+    "ground_truth": "The Turing Test was proposed by Alan Turing in 1950 as a measure of machine intelligence. A machine passes the test if a human evaluator cannot reliably distinguish its responses from those of a human.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Fundamentals",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 3,
+    "question": "What are the three key factors that drove the modern AI renaissance since 2010?",
+    "ground_truth": "The three key factors are: the availability of massive datasets, dramatic improvements in computing hardware (especially GPUs), and breakthroughs in deep learning algorithms.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI History",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 4,
+    "question": "What is the difference between supervised learning and unsupervised learning?",
+    "ground_truth": "Supervised learning trains a model on labelled data where every input is paired with a correct output, and the model learns to generalise to unseen data. Unsupervised learning finds hidden patterns in unlabelled data without using pre-defined labels.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Machine Learning",
+    "chapter": "Chapter 2"
+  },
+  {
+    "id": 5,
+    "question": "What is overfitting and what are some techniques to mitigate it?",
+    "ground_truth": "Overfitting occurs when a model memorises training data and fails to generalise. Mitigation techniques include L1/L2 regularisation, dropout, batch normalisation, early stopping, and data augmentation.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Machine Learning",
+    "chapter": "Chapter 2"
+  },
+  {
+    "id": 6,
+    "question": "What architecture was introduced in the paper 'Attention Is All You Need' and what is its key mechanism?",
+    "ground_truth": "The Transformer architecture was introduced in 'Attention Is All You Need' by Vaswani et al. in 2017. Its key mechanism is self-attention, which models long-range dependencies efficiently in parallel by computing pairwise interactions between all tokens in a sequence.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Deep Learning",
+    "chapter": "Chapter 3"
+  },
+  {
+    "id": 7,
+    "question": "What are the two pretraining objectives used by BERT?",
+    "ground_truth": "BERT uses masked language modelling (MLM) and next-sentence prediction (NSP) as pretraining objectives.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "NLP",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 8,
+    "question": "What is Retrieval-Augmented Generation (RAG) and what problem does it address?",
+    "ground_truth": "Retrieval-Augmented Generation (RAG) combines a retrieval component that fetches relevant documents from a knowledge base with a generative LLM that synthesises an answer grounded in those documents. It reduces hallucinations and allows the model to access up-to-date information without retraining.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "NLP",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 9,
+    "question": "What breakthrough in object detection does the YOLO model represent?",
+    "ground_truth": "YOLO (You Only Look Once) is a single-stage object detector that processes the whole image in one forward pass, trading some accuracy for speed. It is preferred for real-time applications.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Computer Vision",
+    "chapter": "Chapter 5"
+  },
+  {
+    "id": 10,
+    "question": "What is the EU AI Act and when was it established?",
+    "ground_truth": "The EU AI Act (2024) is a regulatory framework that establishes risk-based categories for AI systems, classifying them by potential harm and imposing obligations accordingly.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Ethics",
+    "chapter": "Chapter 6"
+  },
+  {
+    "id": 11,
+    "question": "By approximately how much has global surface temperature increased relative to the 1850–1900 baseline by 2011–2020?",
+    "ground_truth": "Global surface temperature increased by approximately 1.1°C above the 1850–1900 baseline by 2011–2020.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Science",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 12,
+    "question": "What is the ice-albedo feedback and is it a positive or negative climate feedback?",
+    "ground_truth": "The ice-albedo feedback is a positive (amplifying) feedback: melting sea ice exposes darker ocean, which absorbs more solar radiation, causing further warming.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Science",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 13,
+    "question": "What is the current CO₂ concentration in the atmosphere (as of 2023) and how does it compare to pre-industrial levels?",
+    "ground_truth": "CO₂ concentrations have risen from pre-industrial levels of about 280 ppm to over 420 ppm in 2023, the highest in at least 800,000 years.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Science",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 14,
+    "question": "What are the main goals of the Paris Agreement adopted in 2015?",
+    "ground_truth": "The Paris Agreement aims to keep global temperature rise well below 2°C above pre-industrial levels and pursue efforts to limit it to 1.5°C. Countries submit Nationally Determined Contributions (NDCs) every five years through a ratchet mechanism to increase ambition.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Policy",
+    "chapter": "Chapter 3"
+  },
+  {
+    "id": 15,
+    "question": "What is the Loss and Damage mechanism and at which COP was a dedicated fund formally established?",
+    "ground_truth": "The Loss and Damage mechanism addresses harm from climate change that cannot be avoided through mitigation or adaptation. A dedicated fund was formally established at COP28 in Dubai in 2023.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Policy",
+    "chapter": "Chapter 3"
+  },
+  {
+    "id": 16,
+    "question": "By how much did the levelised cost of electricity from utility-scale solar PV fall between 2010 and 2021?",
+    "ground_truth": "The levelised cost of electricity from utility-scale solar PV fell by 89% between 2010 and 2021.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Renewable Energy",
+    "chapter": "Chapter 6"
+  },
+  {
+    "id": 17,
+    "question": "What does the World Bank estimate about internal climate migration by 2050?",
+    "ground_truth": "The World Bank estimates that internal climate migration could reach 216 million people by 2050 without aggressive mitigation and adaptation, with hotspot regions in sub-Saharan Africa, South Asia, and Latin America.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Climate Justice",
+    "chapter": "Chapter 7"
+  },
+  {
+    "id": 18,
+    "question": "What is the approximate percentage of global GHG emissions attributable to electricity generation?",
+    "ground_truth": "Electricity generation is responsible for approximately 25% of global GHG emissions.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Mitigation",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 19,
+    "question": "What was the significance of AlphaFold 2 developed by DeepMind in 2020?",
+    "ground_truth": "AlphaFold 2 predicted the 3D structures of nearly all known proteins, which was a breakthrough for drug discovery.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Applications",
+    "chapter": "Chapter 7"
+  },
+  {
+    "id": 20,
+    "question": "What percentage of new car sales globally did electric vehicles surpass in 2022?",
+    "ground_truth": "Electric vehicle sales passed 10% of new car sales globally in 2022.",
+    "source_pdf": "climate_change.pdf",
+    "answerable": true,
+    "category": "Renewable Energy",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 21,
+    "question": "What is the exact market capitalisation of the global AI industry in 2024?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 22,
+    "question": "What is the name of the specific neural network architecture used by DeepMind in AlphaGo to master the game of Go?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 23,
+    "question": "Which country was the first to reach net-zero carbon emissions as of 2023?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 24,
+    "question": "What is the exact number of parameters in the GPT-4 model?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 25,
+    "question": "What specific programming language was used to implement the first version of Word2Vec?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  }
+]

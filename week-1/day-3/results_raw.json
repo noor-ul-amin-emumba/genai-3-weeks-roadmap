@@ -1,0 +1,418 @@
+[
+  {
+    "id": 1,
+    "question": "Who organised the Dartmouth Conference in 1956 where the field of AI was formally founded?",
+    "ground_truth": "The Dartmouth Conference was organised by John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "AI History",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon organised the Dartmouth Conference in 1956 where the field of AI was formally founded.",
+      "exact_match": 1.0,
+      "token_f1": 0.7368,
+      "bleu_1": 0.6087,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The Dartmouth Conference in 1956 was organised by **John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon**.",
+      "exact_match": 1.0,
+      "token_f1": 0.9375,
+      "bleu_1": 0.8824,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 2,
+    "question": "What is the Turing Test and who proposed it?",
+    "ground_truth": "The Turing Test was proposed by Alan Turing in 1950 as a measure of machine intelligence. A machine passes the test if a human evaluator cannot reliably distinguish its responses from those of a human.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "AI Fundamentals",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The Turing Test is a measure of machine intelligence proposed by Alan Turing in 1950. A machine passes the test if a human evaluator cannot reliably distinguish its responses from those of a human.",
+      "exact_match": 1.0,
+      "token_f1": 0.9565,
+      "bleu_1": 0.9425,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The Turing Test is a measure of machine intelligence in which a machine is considered to have passed if a human evaluator cannot reliably tell its responses apart from those of a human. It was proposed by Alan Turing.",
+      "exact_match": 1.0,
+      "token_f1": 0.7838,
+      "bleu_1": 0.7436,
+      "llm_judge": 9,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 3,
+    "question": "What are the three key factors that drove the modern AI renaissance since 2010?",
+    "ground_truth": "The three key factors are: the availability of massive datasets, dramatic improvements in computing hardware (especially GPUs), and breakthroughs in deep learning algorithms.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "AI History",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The three key factors that drove the modern AI renaissance since 2010 are:\n\n1. The availability of massive datasets\n2. Dramatic improvements in computing hardware (especially GPUs)\n3. Breakthroughs in deep learning algorithms",
+      "exact_match": 1.0,
+      "token_f1": 0.7857,
+      "bleu_1": 0.6667,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The modern AI renaissance since 2010 has been driven by three key factors:  \n\n1. The availability of massive datasets.  \n2. Dramatic improvements in computing hardware (especially GPUs).  \n3. Breakthroughs in deep‑learning algorithms.",
+      "exact_match": 1.0,
+      "token_f1": 0.75,
+      "bleu_1": 0.6364,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 4,
+    "question": "What is the difference between supervised learning and unsupervised learning?",
+    "ground_truth": "Supervised learning trains a model on labelled data where every input is paired with a correct output, and the model learns to generalise to unseen data. Unsupervised learning finds hidden patterns in unlabelled data without using pre-defined labels.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "Machine Learning",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "Supervised learning is the most widely used paradigm, where the model is trained on a labelled dataset, where every input example is paired with the correct output. The objective is to learn a mapping function that generalises from the training distribution to unseen data.\n\nUnsupervised learning, on the other hand, finds hidden patterns or intrinsic structures in unlabelled data.",
+      "exact_match": 1.0,
+      "token_f1": 0.5714,
+      "bleu_1": 0.4746,
+      "llm_judge": 9,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "Supervised learning trains a model on a **labelled** dataset, where each input example is paired with the correct output, so the model learns a mapping f(x) → y that can generalise to new data.  \n\nUnsupervised learning works with **unlabelled** data; it seeks hidden patterns or intrinsic structure (e.g., clusters, low‑dimensional representations) without explicit output targets.",
+      "exact_match": 1.0,
+      "token_f1": 0.5833,
+      "bleu_1": 0.4912,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 5,
+    "question": "What is overfitting and what are some techniques to mitigate it?",
+    "ground_truth": "Overfitting occurs when a model memorises training data and fails to generalise. Mitigation techniques include L1/L2 regularisation, dropout, batch normalisation, early stopping, and data augmentation.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "Machine Learning",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "Overfitting occurs when a model memorises training data and fails to generalise. Regularisation techniques such as L1/L2 penalties, dropout, batch normalisation, early stopping, and data augmentation mitigate overfitting.",
+      "exact_match": 1.0,
+      "token_f1": 0.8727,
+      "bleu_1": 0.8276,
+      "llm_judge": 9,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "Overfitting is when a model memorises the training data and therefore fails to generalise to new, unseen data.  \nTechniques that mitigate overfitting include regularisation methods such as **L1/L2 penalties**, **dropout**, **batch‑normalisation**, **early stopping**, and **data augmentation**.",
+      "exact_match": 1.0,
+      "token_f1": 0.75,
+      "bleu_1": 0.6316,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 6,
+    "question": "What architecture was introduced in the paper 'Attention Is All You Need' and what is its key mechanism?",
+    "ground_truth": "The Transformer architecture was introduced in 'Attention Is All You Need' by Vaswani et al. in 2017. Its key mechanism is self-attention, which models long-range dependencies efficiently in parallel by computing pairwise interactions between all tokens in a sequence.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "Deep Learning",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The architecture introduced in the paper 'Attention Is All You Need' is the Transformer architecture. Its key mechanism is the self-attention mechanism, which computes pairwise interactions between all tokens in a sequence, producing context-aware representations.",
+      "exact_match": 1.0,
+      "token_f1": 0.641,
+      "bleu_1": 0.6064,
+      "llm_judge": 9,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The paper **“Attention Is All You Need”** introduced the **Transformer architecture**, whose key mechanism is **self‑attention**, which replaces recurrence and enables efficient modeling of long‑range dependencies in parallel.",
+      "exact_match": 0.0,
+      "token_f1": 0.5634,
+      "bleu_1": 0.462,
+      "llm_judge": 9,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 7,
+    "question": "What are the two pretraining objectives used by BERT?",
+    "ground_truth": "BERT uses masked language modelling (MLM) and next-sentence prediction (NSP) as pretraining objectives.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "NLP",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "Masked language modelling (MLM) and next-sentence prediction (NSP) are the two pretraining objectives used by BERT.",
+      "exact_match": 1.0,
+      "token_f1": 0.7742,
+      "bleu_1": 0.7059,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The two pretraining objectives used by BERT are **masked language modelling (MLM)** and **next‑sentence prediction (NSP)**.",
+      "exact_match": 1.0,
+      "token_f1": 0.7742,
+      "bleu_1": 0.7059,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 8,
+    "question": "What is Retrieval-Augmented Generation (RAG) and what problem does it address?",
+    "ground_truth": "Retrieval-Augmented Generation (RAG) combines a retrieval component that fetches relevant documents from a knowledge base with a generative LLM that synthesises an answer grounded in those documents. It reduces hallucinations and allows the model to access up-to-date information without retraining.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "NLP",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "Retrieval-Augmented Generation (RAG) combines a retrieval component (which fetches relevant documents from a knowledge base) with a generative LLM (which synthesises an answer grounded in those documents). RAG reduces hallucinations and allows the model to access up-to-date information without retraining.",
+      "exact_match": 1.0,
+      "token_f1": 0.9302,
+      "bleu_1": 0.9302,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "Retrieval‑augmented generation (RAG) is an approach that pairs a **retrieval module**, which pulls relevant documents from a knowledge base, with a **generative large language model** that composes its answer based on those retrieved texts. It tackles two key problems:  \n\n1. **Hallucinations** – by grounding the generation in actual documents, the model is less likely to produce unsupported or fabricated content.  \n2. **Stale or incomplete knowledge** – the retrieval step lets the system incorporate up‑to‑date information without needing to retrain the underlying LLM.",
+      "exact_match": 1.0,
+      "token_f1": 0.5238,
+      "bleu_1": 0.3976,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 9,
+    "question": "What breakthrough in object detection does the YOLO model represent?",
+    "ground_truth": "YOLO (You Only Look Once) is a single-stage object detector that processes the whole image in one forward pass, trading some accuracy for speed. It is preferred for real-time applications.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "Computer Vision",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The YOLO model represents a breakthrough in object detection by being a single-stage detector that processes the whole image in one forward pass, trading accuracy for speed and preferred for real-time applications.",
+      "exact_match": 1.0,
+      "token_f1": 0.7273,
+      "bleu_1": 0.7059,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "YOLO introduced a single‑stage, one‑pass object‑detection approach that processes the entire image in a single forward pass, enabling fast, real‑time detection (trading some accuracy for speed).",
+      "exact_match": 1.0,
+      "token_f1": 0.6452,
+      "bleu_1": 0.6237,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 10,
+    "question": "What is the EU AI Act and when was it established?",
+    "ground_truth": "The EU AI Act (2024) is a regulatory framework that establishes risk-based categories for AI systems, classifying them by potential harm and imposing obligations accordingly.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "AI Ethics",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 0.0,
+      "token_f1": 0.1143,
+      "bleu_1": 0.0336,
+      "llm_judge": 0,
+      "pass_fail": "FAIL"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 0.0,
+      "token_f1": 0.1143,
+      "bleu_1": 0.0336,
+      "llm_judge": 0,
+      "pass_fail": "FAIL"
+    }
+  },
+  {
+    "id": 19,
+    "question": "What was the significance of AlphaFold 2 developed by DeepMind in 2020?",
+    "ground_truth": "AlphaFold 2 predicted the 3D structures of nearly all known proteins, which was a breakthrough for drug discovery.",
+    "answerable": true,
+    "source_pdf": "ai_foundations.pdf",
+    "category": "AI Applications",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 0.0,
+      "token_f1": 0.0741,
+      "bleu_1": 0.0409,
+      "llm_judge": 0,
+      "pass_fail": "FAIL"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 0.0,
+      "token_f1": 0.0741,
+      "bleu_1": 0.0409,
+      "llm_judge": 0,
+      "pass_fail": "FAIL"
+    }
+  },
+  {
+    "id": 21,
+    "question": "What is the exact market capitalisation of the global AI industry in 2024?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "answerable": false,
+    "source_pdf": "none",
+    "category": "Unanswerable",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 22,
+    "question": "What is the name of the specific neural network architecture used by DeepMind in AlphaGo to master the game of Go?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "answerable": false,
+    "source_pdf": "none",
+    "category": "Unanswerable",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 23,
+    "question": "Which country was the first to reach net-zero carbon emissions as of 2023?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "answerable": false,
+    "source_pdf": "none",
+    "category": "Unanswerable",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 24,
+    "question": "What is the exact number of parameters in the GPT-4 model?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "answerable": false,
+    "source_pdf": "none",
+    "category": "Unanswerable",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  },
+  {
+    "id": 25,
+    "question": "What specific programming language was used to implement the first version of Word2Vec?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "answerable": false,
+    "source_pdf": "none",
+    "category": "Unanswerable",
+    "llm_a": {
+      "model": "llama-3.1-8b-instant",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    },
+    "llm_b": {
+      "model": "openai/gpt-oss-120b",
+      "prediction": "The answer is not found in the provided documents.",
+      "exact_match": 1.0,
+      "token_f1": 0.6207,
+      "bleu_1": 0.2946,
+      "llm_judge": 10,
+      "pass_fail": "PASS"
+    }
+  }
+]
