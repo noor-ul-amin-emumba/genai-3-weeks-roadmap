@@ -31,7 +31,7 @@ from reportlab.platypus import (
 OUTPUT_DIR = Path(__file__).parent
 
 # ---------------------------------------------------------------------------
-# PDF 1 – Artificial Intelligence: Foundations and Applications
+# PDF 1 – Artificial Intelligence: Foundations and Applications (50+ pages)
 # ---------------------------------------------------------------------------
 
 AI_SECTIONS = [
@@ -281,6 +281,956 @@ prediction and soil analysis improve yield forecasts.
 Manufacturing: Predictive maintenance models analyse sensor data from machinery to predict
 failures before they occur, reducing downtime. Quality control vision systems detect defects
 on production lines at speeds and accuracy unachievable by human inspectors.
+""",
+    ),
+    (
+        "Chapter 8 – Transfer Learning and Fine-Tuning",
+        """
+Transfer learning is the practice of using knowl edge and representations learned on one task
+to improve performance on another task. This approach dramatically reduces the amount of labelled
+data and training time required, especially when the target task has limited data.
+
+The intuition behind transfer learning is that low-level features (edges, textures, simple shapes)
+learned on large datasets are broadly useful across different vision tasks. A CNN pretrained on
+ImageNet learns hierarchical feature representations: lower layers capture simple patterns, while
+higher layers learn increasingly complex features relevant to object categories.
+
+Fine-tuning is the most common transfer learning approach. Steps include: (1) load a pretrained
+model trained on a large source dataset; (2) remove the task-specific head (classification layer);
+(3) add a new head for the target task; (4) train only the new head on the target dataset, or
+optionally fine-tune later layers as well. Learning rates are typically much lower than for
+training from scratch, preserving learned features while adapting to the new task.
+
+Domain adaptation addresses the shift between source and target domains. Adversarial domain
+adaptation uses a domain discriminator to learn domain-invariant features. Self-training and
+pseudo-labelling leverage unlabelled target data: the model makes predictions on unlabelled
+examples and retrains on high-confidence predictions. Mixup and CutMix augmentation techniques
+interpolate between examples, improving robustness to distribution shift.
+
+Few-shot learning aims to learn from a handful of examples. Meta-learning algorithms such as
+MAML (Model-Agnostic Meta-Learning) optimise the learning process itself, enabling rapid
+adaptation. Prototypical networks and matching networks learn similarity metrics; a new class
+is classified based on proximity to prototype embeddings of support examples.
+
+Zero-shot learning learns without any labeled examples of the target class. This requires semantic
+information (class descriptions, attributes, or learned embeddings) and assumes the model can
+generalise to unseen classes. Vision-language models like CLIP exemplify zero-shot capabilities,
+predicting class labels from text descriptions without task-specific fine-tuning.
+""",
+    ),
+    (
+        "Chapter 9 – Model Optimization and Efficient Inference",
+        """
+As AI models grow larger, deployment becomes increasingly challenging. Model optimization
+techniques reduce memory footprint, latency, and energy consumption.
+
+Quantization reduces the precision of model weights and activations from floating-point (32-bit)
+to lower precision (8-bit or 4-bit integers). Challenges include maintaining accuracy while
+reducing dynamic range. Post-training quantization applied after training often causes accuracy
+loss; quantization-aware training incorporates quantization during training. Mixed-precision
+training uses lower precision for some operations and higher precision for others.
+
+Pruning removes redundant weights or neurons. Magnitude-based pruning removes weights below a
+threshold. Structured pruning removes entire neurons or filters, enabling hardware acceleration.
+Knowledge distillation trains a smaller student model to mimic a larger teacher model's predictions.
+The student learns to approximate the teacher's knowledge, often achieving 95%+ of teacher
+performance with far fewer parameters.
+
+Hardware acceleration uses specialised chips (GPUs, TPUs, ASICs) and optimised software stacks
+(cuDNN, TensorRT, ONNX Runtime). Operator fusion combines multiple operations into a single
+kernel. Memory layout optimisation (NHWC vs NCHW) and cache-friendly algorithms improve throughput.
+
+Model parallelism splits models across multiple devices when they exceed a single device's memory.
+Tensor parallelism partitions matrices across devices; pipeline parallelism splits layers across
+devices. Distributed training synchronises gradient updates across many GPUs or TPUs.
+
+Embedded and edge AI deploys models on mobile phones, IoT devices, and embedded systems. Challenges
+include limited memory (MB to GB), no GPU, and real-time latency constraints. TensorFlow Lite,
+ONNX, and Neural Engine frameworks enable on-device inference. Federated learning trains models
+collaboratively while keeping data locally, addressing privacy concerns.
+""",
+    ),
+    (
+        "Chapter 10 – Data Engineering and Feature Engineering",
+        """
+High-quality data is foundational to model success. Data engineering prepares raw data for training;
+feature engineering manually crafts or learns representations that improve model performance.
+
+Data collection at scale requires infrastructure for storage, versioning, and quality control.
+Data lakes consolidate raw data from diverse sources. Data warehousing organises structured data
+for analytics. Data pipelines automate ingestion, validation, and preprocessing. Tools like Apache
+Spark, Airflow, and Dataflow enable large-scale data processing.
+
+Data cleaning addresses missing values, outliers, and inconsistencies. Imputation strategies
+include mean/median fill, forward-fill for time series, or learned imputation. Outlier detection
+uses statistical methods (z-score, IQR) or isolation forests. Deduplication removes redundant
+records. Data validation ensures schema compliance and constraint satisfaction.
+
+Feature engineering manually creates discriminative features. Domain knowledge is leveraged:
+in NLP, features include word counts, n-grams, and linguistic properties. In time series,
+features include lags, rolling statistics, and seasonal components. Automated feature engineering
+discovers relevant features via genetic programming or neural networks.
+
+Imbalanced datasets, common in fraud detection or disease diagnosis, lead to biased classifiers.
+Techniques include stratified sampling, oversampling minorities (random or SMOTE), undersampling
+majorities, and cost-weighted loss functions. Evaluation metrics must account for imbalance:
+precision, recall, F1 score, and AUC-ROC are preferable to accuracy.
+
+Feature scaling normalises or standardises features to similar ranges, improving optimisation
+convergence. Standardisation (z-score) and min-max scaling are common. Categorical features are
+encoded as one-hot vectors, ordinal numbers, or learned embeddings. Feature selection reduces
+dimensionality via statistical tests (chi-square, correlation), model-based importance (permutation
+importance, SHAP), or regularisation (L1 penalty).
+""",
+    ),
+    (
+        "Chapter 11 – Distributed Training and Scaling",
+        """
+Training large models requires distributed systems. Two main paradigms are data parallelism and
+model parallelism.
+
+Data parallelism replicates the model across multiple devices, each processing a different batch.
+Gradients are synchronised afterward via AllReduce. Synchronous training waits for all devices
+before updating; asynchronous training allows stragglers but risks gradient staleness and
+convergence issues. Ring AllReduce and tree-based reduction are efficient communication topologies.
+
+Model parallelism splits models across devices. Vertical parallelism assigns different layers to
+different devices. Horizontal (tensor) parallelism splits matrices (e.g., split transformer
+attention heads or language model embeddings across devices). Pipeline parallelism overlaps
+backward passes of earlier layers with forward passes of later layers, improving utilisation.
+
+Communication overhead is a bottleneck. Gradient compression reduces message size via quantisation
+or sparsification (only communicating large gradients). Local SGD allows devices to diverge for
+k steps before syncing, reducing communication frequency. Parameter servers decouple compute and
+storage, enabling asynchronous updates.
+
+Distributed optimization algorithms adapt to asynchronous settings. Delayed gradient descent
+accounts for stale gradients. Federated averaging (FedAvg) updates a central model from local
+models trained independently. Byzantine-robust aggregation handles faulty or adversarial devices.
+
+Frameworks including PyTorch Distributed, TensorFlow Distributed, and Horovod abstract parallelism,
+allowing users to write single-device code that automatically scales. JAX enables functional
+transformations like vmap (vectorisation) and pmap (parallel mapping).
+
+Scaling laws quantify how performance improves with model size, data size, and compute. Chinchilla
+scaling suggests optimal allocation: compute should be distributed roughly equally between model
+parameters and training tokens. Larger models with more data consistently outperform smaller models
+with less data, assuming sufficient compute budget.
+""",
+    ),
+    (
+        "Chapter 12 – Testing, Validation, and Robustness",
+        """
+AI systems must be rigorously tested before deployment. Beyond traditional accuracy metrics,
+robustness to distribution shift and adversarial perturbations is critical.
+
+Benchmark datasets enable standardised evaluation. Common vision benchmarks include ImageNet,
+CIFAR-10, and Pascal VOC. NLP benchmarks include GLUE, SuperGLUE, and SQuAD. Time series benchmarks
+include UCR Archive. Leaderboards incentivise progress but raise concerns about overfitting to
+benchmarks; strong performance on benchmarks does not guarantee real-world robustness.
+
+Evaluation metrics must align with goals. For classification, accuracy is insufficient if classes
+are imbalanced; precision, recall, and F1 score are more informative. For ranking, NDCG and MAP
+measure ranking quality. For segmentation, Jaccard index and Dice coefficient assess overlap.
+For generative models, BLEU, ROUGE, and METEOR assess quality; FID and Inception score assess
+realism.
+
+Adversarial examples are inputs crafted to fool classifiers. Rotations, translations, and
+brightness shifts test invariance. Adversarial perturbations—small, imperceptible noise—can flip
+predictions. FGSM (Fast Gradient Sign Method) and PGD (Projected Gradient Descent) are standard
+attack methods. Certified defences (randomised smoothing, IBP) provide provable robustness bounds,
+though at accuracy cost.
+
+Distribution shift occurs when test data differs from training. Covariate shift changes input
+distribution. Label shift changes class frequencies. Concept drift is when the mapping from input
+to output fundamentally changes (e.g., spam definitions evolving). Strategies include importance
+weighting, domain adversarial training, and continual learning.
+
+Interpretability and explainability help practitioners understand model decisions. Linear models
+and decision trees are inherently interpretable. Complex models need post-hoc explanations: LIME
+approximates local models around an instance; SHAP computes shapley values attributing each
+feature's contribution; attention saliency maps highlight important input regions.
+
+Model auditing and bias detection identify discrimination. Red-teaming involves finding
+adversarial inputs and edge cases. Fairness audits check for disparities across demographic groups.
+Fairness-accuracy tradeoffs require balancing performance with equitable treatment.
+""",
+    ),
+    (
+        "Chapter 13 – Large Language Models and In-Context Learning",
+        """
+Large language models (LLMs) have emerged as dominant AI systems, demonstrating remarkable
+capabilities across language understanding and generation tasks.
+
+LLMs are Transformer-based models pretrained on vast text corpora using next-token prediction.
+Scaling up model size (parameters), data size (tokens), and compute enables emergent capabilities—
+abilities absent in smaller models. GPT-3 (175B parameters) showed in-context learning: adapting
+to new tasks from a handful of examples without gradient updates, purely from prompt context.
+
+In-context learning is a form of implicit meta-learning. The prompt provides context (examples,
+instructions, or demonstrations) that the model uses to infer the task. Few-shot prompting provides
+examples; zero-shot prompting provides instructions. Chain-of-thought prompting breaks complex tasks
+into intermediate steps, improving reasoning. Instruction fine-tuning (RLHF—Reinforcement Learning
+from Human Feedback) aligns models with human preferences, reducing harmful outputs and improving
+helpfulness.
+
+Prompt engineering optimises the natural language instructions sent to LLMs. Temperature and top-p
+sampling control output randomness. Top-k sampling limits the vocabulary to the k most likely
+tokens. Repetition penalties discourage repeated phrases. Prompt templates structure inputs for
+downstream tasks (classification, summarisation, translation).
+
+Grounding and retrieval-augmented generation (RAG) address hallucination. Dense retrieval (e.g.,
+DPR—Dense Passage Retrieval) fetches relevant documents from a knowledge base via learned
+embeddings. Sparse retrieval (BM25) uses term frequency. Reranking ensures retrieved passages
+are relevant. The LLM then generates answers grounded in retrieved context.
+
+LLM limitations include hallucination (confident false claims), brittleness to prompt variations,
+biases inherited from training data, and computational expense. Mitigations include RLHF fine-tuning,
+constitutional AI (CAI) providing explicit principles, continuous monitoring, and safety
+testing. Ongoing research aims for more truthful, aligned, and efficient LLMs.
+""",
+    ),
+    (
+        "Chapter 14 – Multimodal Learning and Vision-Language Models",
+        """
+Modern AI increasingly processes multiple modalities—images, text, audio, and video—jointly.
+Multimodal learning leverages cross-modal signals for richer understanding.
+
+Vision-language pretraining learns joint representations of images and text. CLIP (Contrastive
+Language-Image Pretraining) trains encoders for both modalities, learning to align images with
+their descriptions via contrastive loss. ViLBERT fuses visual and textual information via
+transformer layers. ALBEF (Align Before Fusion) aligns modalities before fusion, improving
+robustness.
+
+Vision-language models enable zero-shot classification and retrieval. Given a test image and
+candidate labels, CLIP computes similarities between the image embedding and text embeddings of
+each label, enabling classification without fine-tuning. Cross-modal retrieval retrieves images
+matching text queries or vice versa.
+
+Image captioning generates textual descriptions of images. Encoder-decoder architectures use a
+CNN (or ViT) encoder to extract image features and a Transformer decoder to generate captions
+autoregressively, conditioned on image features. Training requires paired image-caption datasets;
+evaluation uses BLEU, CIDEr, and METEOR metrics.
+
+Visual question answering (VQA) answers natural language questions about images. Models encode
+both image and question, combine representations, and decode answers. VQA requires reasoning
+over visual content and language understanding. Attention mechanisms highlight which image
+regions are relevant to each question word.
+
+Multimodal generation produces images from text (DALL-E, Stable Diffusion), video from text,
+audio from text (text-to-speech), and cross-modal synthesis. Diffusion models for text-to-image
+generation iteratively refine noise into images, conditioned on text embeddings.
+
+Multimodal fusion strategies include early fusion (combine raw modalities), late fusion (combine
+learned representations), and hybrid approaches. Co-training uses one modality to regularise
+another. Knowledge distillation transfers knowledge from one modality to another.
+""",
+    ),
+    (
+        "Chapter 15 – AI for Scientific Discovery",
+        """
+AI increasingly accelerates scientific research, from materials discovery to drug development
+to fundamental physics.
+
+Protein structure prediction: AlphaFold 2 (DeepMind, 2020) predicted the 3D structures of nearly
+all known proteins using a deep learning architecture combining evolutionary and co-evolutionary
+information. This solved the protein folding problem—a longstanding challenge—and has enabled
+drug design and understanding of disease mechanisms. AlphaFold3 extended prediction to complexes
+and non-protein molecules.
+
+Drug discovery involves identifying compounds that bind to disease-related proteins. Molecular
+generation uses graph neural networks (GNNs) and autoregressive models to generate novel molecules.
+Molecular property prediction uses GNNs to predict drug-like properties (solubility, toxicity,
+binding affinity). Virtual screening ranks molecules by predicted binding; promising candidates
+undergo experimental validation.
+
+Materials science benefits from ML-accelerated discovery. Crystal structure prediction, band gap
+prediction, and stability assessment guide synthesis. Inverse design searches for materials with
+target properties. Data-driven models trained on computed or experimental databases enable rapid
+property predictions, reducing the need for expensive experiments.
+
+High-energy physics uses deep learning for particle detector data analysis. CNNs and RNNs process
+detector events to identify rare interactions. Generative models simulate detector response,
+reducing computational expense compared to traditional Monte Carlo simulations.
+
+Computational biology applies NLP and sequence models to genomics. Transformer-based models
+(e.g., DNABERT, ESM) learn representations from protein and DNA sequences, enabling variant-effect
+prediction, protein-protein interaction prediction, and functional annotation. These models are
+particularly useful for large-scale genomic studies.
+
+Scientific machine learning combines domain knowledge with learning. Physics-informed neural
+networks (PINNs) encode differential equations as loss terms, ensuring learned models satisfy
+physical laws. Neural operators (DeepONet, FNO) learn infinite-dimensional mappings (e.g.,
+solving PDEs) more expensively than neural networks but much faster than classical solvers.
+""",
+    ),
+    (
+        "Chapter 16 – AI Safety and Alignment",
+        """
+As AI systems become more powerful and influential, ensuring they operate safely and align with
+human values is critical.
+
+The alignment problem asks: how can we ensure advanced AI systems reliably pursue intended goals?
+A system might optimise the specified objective perfectly but in unintended ways (reward hacking).
+A robot instructed to "make people smile" might paralyse faces. These aren't bugs but failures to
+capture true human preferences.
+
+Value learning aims to infer human preferences from observa tions (behaviour, rankings, explanations).
+Inverse reinforcement learning (IRL) infers a reward function from expert demonstrations. Learning
+from human feedback (LFHF) and RLHF use human-provided rankings to train preference models, which
+then guide policy optimisation.
+
+Robustness to distribution shift is crucial. A system trained on a particular distribution may
+fail catastrophically on slightly different inputs. Worst-case robustness searches for adversarial
+examples the model fails on. Distributional robustness optimises the worst-case loss over plausible
+distributions. Certified defences provide provable guarantees.
+
+Interpretability helps engineers understand and debug systems. Mechanistic interpretability aims
+to understand learned circuits. Feature importance and saliency methods highlight what inputs
+matter. Attention visualisation reveals which tokens a model attends to. Post-hoc explanations
+approximate complex model decisions.
+
+Containment and specification limits damage from misbehaving systems. Sandboxing restricts system
+access to critical resources. Approval requirements involve humans in high-stakes decisions.
+Reversibility enables turning off systems. Verifiable outcomes (where correctness can be checked)
+are preferable to approval-based outcomes.
+
+Long-term AI safety research addresses existential risks from advanced AI. Cooperation and
+deception research explores how to ensure systems cooperate with humans rather than deceive them.
+Goal misgeneralisation studies how learned objectives generalise beyond training distribution.
+Power-seeking research explains why advanced systems might acquire power-seeking subgoals.
+""",
+    ),
+    (
+        "Chapter 17 – Reinforcement Learning and Control",
+        """
+Reinforcement learning (RL) enables agents to learn through trial and error, adapting to new
+environments without explicit programming.
+
+Markov Decision Processes (MDPs) formalise RL. An agent observes state s, takes action a, receives
+reward r, and transitions to next state s'. The objective is to maximise cumulative reward. MDPs
+assume the Markov property: the future depends only on the current state, not history.
+
+Q-learning learns the value of state-action pairs offline. The Q-function Q(s, a) estimates
+expected cumulative reward from state s after taking action a. Q-values are updated using the
+Bellman equation: Q(s, a) ← Q(s, a) + α(r + γ max_a' Q(s', a') - Q(s, a)). Convergence is
+guaranteed for tabular problems with sufficient exploration.
+
+Deep Q-Networks (DQN) use neural networks to approximate Q-values, enabling learning in
+high-dimensional state spaces. Experience replay stores past transitions and samples minibatches
+for training, breaking temporal correlations and improving stability. Target networks decouple
+the Q-network used for updates from the network generating targets, reducing divergence.
+
+Policy gradient methods directly optimise the policy. REINFORCE samples trajectories and updates
+the policy in the direction of high-value returns. Actor-critic methods combine a policy network
+(actor) and value network (critic), using the critic's prediction to reduce variance. PPO (Proximal
+Policy Optimisation) clips probability ratios to stabilise training. A3C (Asynchronous Advantage
+Actor-Critic) enables distributed training.
+
+Model-based RL learns a model of environment dynamics (e.g., a neural network predicting next states).
+Planning algorithms use the learned model to search for good action sequences. Imagination-based
+methods plan in a learned latent space. Dyna algorithms interleave learning and planning.
+
+RL applications include game playing (AlphaGo, AlphaStar), robotics (manipulation, navigation),
+autonomous systems, recommendation systems, and energy management. Challenges include sample
+efficiency (learning from limited interactions), exploration-exploitation tradeoff, and credit
+assignment in long-horizon tasks.
+""",
+    ),
+    (
+        "Chapter 18 – Robotics and Autonomous Systems",
+        """
+Robotics combines mechanical engineering, control theory, and AI. Modern robots use machine learning
+to perceive environments, plan actions, and adapt to unfamiliar scenarios.
+
+Perception in robotics involves sensor fusion combining camera, lidar, radar, and IMU data. Computer
+vision processes images for object detection, semantic segmentation, and depth estimation. Lidar
+provides precise 3D point clouds. Traditional approaches use handcrafted features; modern systems
+use CNNs and 3D convolutions for end-to-end learning.
+
+Manipulation tasks require grasping and placing objects. Grasp planning predicts good contact points
+on objects. Reinforcement learning trains policies for manipulation, though sample efficiency remains
+a challenge. Sim-to-real transfer trains in simulation (faster, unlimited data) then deploys on real
+robots. Domain randomisation (varying simulation parameters) improves transfer.
+
+Autonomous vehicles integrate perception, planning, and control. Object detection identifies
+pedestrians, vehicles, and obstacles. Trajectory prediction forecasts the motion of dynamic agents.
+Path planning finds collision-free routes; SLAM (Simultaneous Localisation and Mapping) builds
+maps while localising. End-to-end learning trains neural networks to map sensor observations
+directly to steering commands, though interpretability and safety verification remain challenges.
+
+Mobile robot navigation involves localisation and path planning. Monte Carlo localisation tracks
+the robot's position given sensor observations. A* and RRT* plan optimal paths avoiding obstacles.
+Simultaneous localisation and mapping (SLAM) is crucial for exploration in unknown environments.
+
+Robot learning from demonstration (imitation learning) learns from human examples. Behavioural cloning
+directly maps observations to actions. Inverse reinforcement learning infers the underlying reward
+function. Meta-learning enables rapid adaptation to new tasks from a few demonstrations.
+
+Safety is paramount in robotics. Formal verification proves correctness for critical systems. Robust
+control handles model uncertainty. Real-time constraints ensure timely decision-making. Collaborative
+robots (cobots) work safely around humans via compliance and force-limiting.
+""",
+    ),
+    (
+        "Chapter 19 – Graph Neural Networks",
+        """
+Many real-world data exhibit structure beyond sequences or grids: social networks, molecules, 
+knowledge bases, and citation networks. Graph neural networks (GNNs) process tabular data where 
+relationships between entities are as important as attributes.
+
+Graphs consist of nodes (entities) and edges (relationships). Node features might include attributes;
+edge features capture relationship properties. GNNs produce node embeddings that incorporate
+neighbourhood information via message passing: each node's embedding is refined by aggregating
+messages from neighbours.
+
+Graph convolutional networks (GCNs) are a foundational GNN architecture. The update rule is:
+h_v^{(k+1)} = W^{(k)} h_v^{(k)} + ∑_{u ∈ N(v)} h_u^{(k)}, where h_v is the node embedding,
+W^{(k)} is a learnable weight matrix, and N(v) is the neighbourhood. Stacking layers enables
+far-reaching information propagation: a k-layer GNN incorporates information from k-hop neighbours.
+
+Graph attention networks (GATs) use multi-head attention to weight neighbour contributions. More
+important neighbours receive higher attention weights. This is more flexible than uniform aggregation.
+
+GraphSAGE introduces sampling and aggregating: rather than aggregating over all neighbours (which
+is expensive for large graphs), it samples a fixed number of neighbours. This enables minibatch
+training and scalability to billion-node graphs.
+
+GNN applications include: node classification (labelling nodes e.g., document categorisation),
+link prediction (predicting missing edges e.g., friend recommendations), and graph classification
+(labelling entire graphs e.g., molecular property prediction). Molecular GNNs have accelerated drug
+discovery: atoms are nodes, bonds are edges; properties are predicted end-to-end.
+
+Challenges include handling directed/heterogeneous graphs, scaling to billions of nodes, and
+integrating structural and temporal information. Recent advances include heterogeneous GNNs for
+multi-type entities, temporal GNNs for evolving graphs, and graph pooling for whole-graph
+representations.
+""",
+    ),
+    (
+        "Chapter 20 – Time Series Forecasting and Anomaly Detection",
+        """
+Time series data is ubiquitous: stock prices, weather, energy consumption, sensor readings. Predicting
+future values and detecting anomalies enable proactive decision-making.
+
+Temporal structure in time series demands special care. Autoregressive (AR) models predict future
+values as functions of past values. ARIMA (Autoregressive Integrated Moving Average) is a classical
+method. Exponential smoothing and Holt-Winters handle trends and seasonality.
+
+Neural networks capture complex temporal dependencies. RNNs and LSTMs process sequences, overcoming
+gradient vanishing. Gated Recurrent Units (GRUs) simplify LSTMs with fewer parameters. Attention
+mechanisms—especially in Transformer architectures—enable efficient long-range dependencies without
+RNN recurrence.
+
+Transformer-based models like Temporal Fusion Transformers (TFT) and Transformers with learnable
+embeddings model temporal patterns. Dilated convolutions (Temporal Convolutional Networks) process
+long sequences efficiently. N-BEATS is a pure attention-free architecture achieving state-of-the-art
+results.
+
+Seasonality and trends require decomposition. Classical methods like seasonal decomposition separate
+trend and seasonal components. Neural approaches learn these implicitly. Multiple-step ahead forecasting
+(predicting multiple future timesteps) requires care: recursive prediction (feeding predictions back)
+accumulates error; direct methods train separate heads for each horizon.
+
+Anomaly detection identifies unusual patterns. Rule-based thresholds flag values exceeding statistical
+bounds. Isolation forests are efficient unsupervised learners. Autoencoders reconstruct normal
+patterns; anomalies show larger reconstruction error. GRU-based methods learn temporal patterns;
+anomalies deviate from learned dynamics.
+
+Online learning handles streaming data where new data continuously arrives. Online anomaly detection
+updates models incrementally. Concept drift (when patterns change) requires adaptive models.
+
+Applications include: financial forecasting (stock prices, volatility), energy (demand prediction,
+grid stability), infrastructure (equipment failure prediction), and security (intrusion detection).
+""",
+    ),
+    (
+        "Chapter 21 – Recommendation Systems",
+        """
+E-commerce, streaming, and social media platforms rely on recommendation systems to personalise
+user experience, increase engagement, and drive revenue.
+
+Collaborative filtering predicts user preferences from "wisdom of the crowd." User-based CF finds
+similar users and recommends items they liked. Item-based CF finds similar items to ones the user
+has liked. Matrix factorisation decomposes the user-item interaction matrix into low-rank user and
+item embeddings: r_ui ≈ u_u^T v_i. Singular Value Decomposition (SVD) and non-negative matrix
+factorisation are classical approaches.
+
+Content-based filtering recommends items similar to those the user previously liked, based on
+item features (genre, director, keywords). Hybrid systems combine collaborative and content-based
+approaches.
+
+Neural collaborative filtering uses deep neural networks to learn embeddings. Wide & Deep networks
+combine memorisation (learning specific user-item pairs) with generalisation (learning patterns).
+Matrix factorisation can be viewed as a shallow neural network. Deeper architectures learn
+non-linear interactions between user and item embeddings.
+
+Sequential recommendation models temporal dynamics. RNNs and Transformers process user interaction
+sequences, predicting the next item. Attention mechanisms highlight which past items are important
+for the next prediction.
+
+Context-aware systems incorporate contextual information: time of day, location, device type.
+Knowledge-aware systems leverage knowledge graphs, incorporating side information about items and
+relationships.
+
+Implicit feedback (clicks, purchases, dwell time) is more abundant than explicit ratings but noisier.
+Ranking loss (BPR—Bayesian Personalized Ranking) assumes clicked items are preferred to unclicked
+ones. Point-wise loss (predicting rating value) differs from pairwise loss (relative ranking).
+
+Cold-start problems arise for new users and items with minimal history. Solutions include feature-based
+initialisation, meta-learning, and hybrid filtering. Diversity and novelty encourage exploring beyond
+items similar to past preferences. Exploration-exploitation tradeoffs balance popularity (safe) with
+discovery (engaging).
+
+Major platforms use ensembles: candidate generation retrieves promising items, ranking refines scores,
+then diverse results are presented to balance relevance and discovery.
+""",
+    ),
+    (
+        "Chapter 22 – Causal Inference and Causal Learning",
+        """
+Machine learning typically learns correlations: patterns in data. Causal inference asks what happens
+when we intervene: if we change X, how does Y respond? This is crucial for policy decisions, drug
+trials, and marketing campaigns. Correlation is not causation.
+
+Causal models encode assumptions as directed acyclic graphs (DAGs). Nodes are variables, edges represent
+causal relationships. Confounder variables influence both treatment and outcome, creating spurious
+correlation. A confounder must be adjusted for to estimate true causal effects.
+
+Randomised controlled trials (RCTs) are the gold standard: randomly assigning subjects to treatment
+and control isolates causal effects. But RCTs are expensive, slow, and unethical in some cases.
+Observational studies use existing data but must account for confounding.
+
+Causal identification asks whether causal effects can be determined from observed data. The
+back-door criterion (blocking all non-causal paths) identifies the causal effect of treatment on
+outcome. The front-door criterion handles cases with unobserved confounders.
+
+Propensity score matching estimates treatment effects in observational data. The propensity score—
+the probability of treatment given covariates—is estimated. Matching treated and untreated units
+with similar propensity scores balances covariate distributions, approximating RCT balance.
+
+Causal forests grow random forests where each tree estimates heterogeneous treatment effects: the
+same treatment may benefit some subgroups more than others. Trees split on covariates to isolate
+homogeneous subgroups with consistent treatment effects. This enables personalised interventions.
+
+Instrumental variables address unmeasured confounding. An instrument is uncorrelated with confounders,
+affects treatment, and affects outcome only through treatment. IV regression estimates local average
+treatment effects (LATE) on compliers.
+
+Causal discovery learns the causal graph from data, assuming no unmeasured confounding. Constraint-based
+methods (PC, FCI) exploit conditional independence relationships. Score-based methods search for
+high-scoring graphs. These assume acyclicity and no selection bias—strong assumptions often violated
+in practice.
+
+Applications include: personalisedmedicine (treatment effect heterogeneity), economics (impact evaluation),
+and policy (effectiveness of interventions).
+""",
+    ),
+    (
+        "Chapter 23 – Meta-Learning (Learning to Learn)",
+        """
+Meta-learning or "learning to learn" aims to enable models to quickly adapt to new tasks. Classical
+ML requires substantial task-specific data; meta-learning achieves good performance from few examples.
+
+Few-shot learning is applied meta-learning: perform well on a new task from a handful of labelled
+examples. This contrasts with classical deep learning's appetite for thousands of labelled examples.
+Meta-learning algorithms train on a distribution of tasks, learning an inductive bias that transfers.
+
+Model-Agnostic Meta-Learning (MAML) trains for fast adaptation. The meta-objective is to minimise
+loss on a new task after one (or few) gradient steps. MAML performs inner-loop gradient updates on
+each task, then outer-loop updates on the meta-objective. After meta-training, new tasks require
+minimal gradient steps.
+
+Prototypical networks learn a metric space where examples of the same class are close and different
+classes are far. During meta-learning, support examples (labelled examples of each class) are projected
+to prototypes (class centroids). Query examples are classified by proximity to prototypes. No gradient
+updates on test tasks—only distance computation.
+
+Matching networks and relation networks learn similarity metrics. Matching networks combine attention
+and memory for few-shot classification. Relation networks learn pairwise similarity between examples.
+
+Task distributions crucially affect meta-learning. Diverse task distributions enable learning broadly
+applicable inductive biases. Task labels (e.g., "this is a novel class classification task") provide
+useful information. Domain-specific task distributions may learn biases inapplicable across domains.
+
+Meta-learning extends beyond classification. Meta-reinforcement learning learns policies adaptable
+to new RL tasks quickly. Neural architecture search (NAS) meta-learns good architectures for new
+datasets.
+
+Optimisation-based meta-learning (MAML, FOMAML) learns a good initialisation. Metric-based meta-learning
+(prototypical networks, matching networks) learns similarity metrics. Memory-augmented approaches use
+external memory for few-shot learning.
+
+Challenges include computational cost (many gradient steps during training), task distribution design,
+and mismatch between meta-training and deployment tasks. Despite progress on benchmarks, real-world
+few-shot learning remains challenging.
+""",
+    ),
+    (
+        "Chapter 24 – Continual Learning and Catastrophic Forgetting",
+        """
+Most ML systems learn from fixed datasets. Real-world scenarios involve streams of data where new tasks
+continually arrive. Learning new tasks risks forgetting old ones—catastrophic forgetting.
+
+Catastrophic forgetting occurs when training on new data substantially degrades performance on previous
+tasks. When neural networks are trained on task B after task A, weights are updated to optimise task B,
+moving away from the task A optimum. This is a fundamental challenge in continual learning.
+
+Rehearsal (experience replay) mitigates forgetting by replaying samples from previous tasks during learning.
+Elastic weight consolidation (EWC) identifies task-important weights (using Fisher information) and
+constrains their changes during new-task training. Progressive neural networks add new columns for new
+tasks, preventing overwriting of learned features.
+
+Plasticity-stability tradeoff is central: plasticity enables learning new information; stability preserves
+old knowledge. Rehearsal and consolidation approach this differently. Rehearsal maintains plasticity but
+requires memory. Consolidation protects stability but may reduce plasticity for truly new concepts.
+
+Dynamic architectures grow networks for new tasks. Progressive neural networks, PackNet, and adapter
+modules add capacity for new tasks without modifying existing weights. This addresses stability but
+increases model size.
+
+Task boundaries and offline learning enable stronger solutions. With explicit task boundaries, features
+can be frozen (stability) or replayed (rehearsal). Offline continual learning—where future tasks are
+known but not yet arrived—enables replay and consolidation strategies.
+
+Domain incremental learning sees a continuum of data from related domains. Class incremental learning
+introduces new classes over time. Domain incremental is typically easier (features transfer across
+domains) than class incremental (new classes may introduce new feature spaces).
+
+Continual learning metrics assess forgetting, backward transfer (new learning improving old tasks), and
+forward transfer (old learning aiding new tasks). Current benchmarks (Split-CIFAR, Split-ImageNet) are
+relatively simple; realistic continual learning remains open.
+
+Open questions: How can systems learn unlimited tasks? How do we detect when to consolidate versus
+plastify? Can we achieve human-like continual learning, where extensive knowledge coexists without
+catastrophic forgetting?
+
+Applications: robotics (new skills without forgetting old ones), autonomous systems (adapting to new
+environments), and lifelong learning.
+""",
+    ),
+    (
+        "Chapter 25 – Knowledge Graphs and Semantic Web",
+        """
+Knowledge graphs (KGs) represent entities and relationships in structured form. DBpedia, Wikidata, and
+Freebase contain billions of facts: (subject, predicate, object) triples. Knowledge graphs enable
+reasoning, entity resolution, and improved search and recommendations.
+
+Link prediction fills missing relationships. Graph embeddings map entities and relations to vector space;
+similarity indicates existence of relationships. TransE embeds entities and relations such that
+h + r ≈ t (head + relation ≈ tail). Variants (TransH, TransR, DistMult) handle complex relationships.
+
+Knowledge graph completion identifies missing triples. RotatE models relations as rotations in complex
+space. ConvKB uses convolutional networks. Graph neural networks aggregate neighbourhood information,
+learning rich representations.
+
+Entity linking maps mention strings to entities in KGs. "New York" links to the entity representing
+the city. Disambiguation handles ambiguous mentions. BERT-based methods achieve high accuracy. Coreference
+resolution groups mentions referring to the same entity.
+
+Named entity recognition (NER) identifies entity mentions in text. Classical approaches use sequence
+labelling (BIO tags). LSTM-CRF combines RNNs and conditional random fields. Transformer-based models
+(BERT-NER, SpanBERT) achieve state-of-the-art.
+
+Relation extraction identifies relationships mentioned in text. Pattern-based approaches use handcrafted
+rules. Supervised distant supervision leverages KGs to automatically label training data. Unsupervised
+relation extraction discovers novel relations. Self-attention in Transformers highlights important input
+spans and relations.
+
+Knowledge graph reasoning deduces implicit facts from explicit ones. Rule-based reasoning applies rules
+(if A→B and B→C then A→C). Embedding-based reasoning leverages learned KG embeddings. Neural-symbolic
+approaches combine logical rules with neural learning.
+
+Semantic web standards (RDF, OWL) enable interoperable KGs. Linked open data connects KGs across
+organisations. SPARQL query language retrieves facts and reasons over KGs.
+
+Applications: search (Google's Knowledge Graph), Q&A systems (retrieving facts for answers), recommendation
+(discovering related entities), and scientific discovery (identifying research relationships).
+""",
+    ),
+    (
+        "Chapter 26 – Neural Architecture Search (NAS)",
+        """
+Designing neural network architectures is an art combining intuition and experimentation. Neural architecture
+search (NAS) automates this, treating architecture design as an optimisation problem.
+
+Topology search finds the connectivity between layers. Should two layers skip-connect? Which operations
+(convolution, pooling) are present? Search spaces encode candidate architectures. Exponential search
+spaces make brute-force enumeration infeasible.
+
+Architecture properties matter: width (number of channels), depth (number of layers), skip connections
+(residual links), and operations. The optimal architecture depends on dataset, hardware, and constraints
+(latency, memory). ImageNet-optimised architectures may underperform on medical imaging.
+
+Reinforcement learning approaches use an RNN controller to encode architectures. The controller is
+trained with policy gradient using validation accuracy as reward. This enables joint learning of the
+architecture and weights. Computational cost is high (1000s of GPU days) but can be amortised across
+many tasks.
+
+Evolutionary algorithms (genetic algorithms, evolutionary strategies) evolve populations of architectures.
+Crossover and mutation generate offspring. Better-performing architectures are selected. Parallel
+evaluation accelerates search. These are embarrassingly parallelisable.
+
+Differentiable NAS (DARTS) relaxes discrete architecture search to continuous, enabling gradient-based
+optimisation. Categorical choices become learnable mixed probability distributions. This reduces search
+time from days to hours. DARTS variants (progressive shrinking, warmup) improve stability.
+
+Efficient NAS addresses computational burden. Weight sharing (training a supernet containing all candidates)
+enables quick validation accuracy estimation. Early stopping stops unpromising architectures. Zero-cost
+proxies estimate architecture quality without training.
+
+Hardware-aware NAS optimises for latency, energy, or memory constraints. Latency predictors estimate
+deployment cost. Multi-objective NAS balances accuracy and efficiency. Pareto frontiers show
+accuracy-efficiency tradeoffs.
+
+Transfer NAS leverages architecture priors. Warm-starting NAS with known-good initialisation accelerates
+search. Architecture analysis identifies what makes good architectures (patterns, modules) transferable
+across datasets.
+
+Applications: automating model design across domains, adapting architectures to hardware constraints,
+and discovering novel operations (e.g., Swish activation, discovered via NAS).
+""",
+    ),
+    (
+        "Chapter 27 – Generative Adversarial Networks (GANs)",
+        """
+GANs pit two networks against each other: a generator produces fake samples; a discriminator
+distinguishes real from fake. Training is a two-player game where both networks improve iteratively.
+
+The generator learns to map random noise z to realistic data samples. The discriminator learns to classify
+real vs generated samples. Nash equilibrium is reached when the discriminator cannot distinguish real from
+fake (50% accuracy), and the generator produces realistic samples.
+
+Training dynamics are tricky. Vanishing gradients: if the discriminator is too good, the generator's
+gradient becomes very small, slowing learning. Mode collapse: the generator produces a limited variety of
+samples instead of full data diversity. Non-convergence: training oscillates without reaching equilibrium.
+
+DCGAN introduced convolutional architectures winning stability and quality. Batch normalisation in both
+networks, strided convolutions instead of pooling, and leaky ReLU activations improved training.
+
+WGAN (Wasserstein GAN) uses Wasserstein distance (optimal transport) instead of JS divergence. This provides
+meaningful gradients even far from equilibrium. Gradient penalty enforces the Lipschitz constraint. Training
+becomes more stable and mode collapse less severe.
+
+Progressive GANs grow networks during training: start with low resolution, gradually add layers for higher
+resolution. This stabilises training and produces high-quality high-resolution images.
+
+Conditional GANs (CGAN) add class labels, enabling class-conditional generation. Diffusion models and score-based
+models, though not strictly GANs, are now dominant for image generation due to superior stability and quality.
+
+StyleGAN introduces learnable style mixing, enabling fine-grained control over generation. Style is injected
+at multiple layers, allowing separate control of high and low-level details. Disentangled representations
+enable intuitive editing.
+
+GAN applications: image generation (faces, landscapes, objects), style transfer, image-to-image translation
+(pix2pix, CycleGAN), domain adaptation, and data augmentation. GANs excel at generating realistic images
+but struggle with other modalities (some success with audio, limited success with text).
+
+Challenges: training instability, mode collapse, convergence assessment, and evaluation metrics. Inception
+Score and Fréchet Inception Distance (FID) assess sample quality and diversity.
+""",
+    ),
+    (
+        "Chapter 28 – Variational Autoencoders (VAEs)",
+        """
+Variational autoencoders combine autoencoders (unsupervised representation learning) with probabilistic
+modeling. The encoder compresses data to latent codes; the decoder reconstructs data from codes. The
+latent space is a probability distribution enabling generation of new samples.
+
+Autoencoders learn low-dimensional representations of data. An encoder maps inputs to latent codes z;
+a decoder reconstructs inputs from codes. Training minimises reconstruction loss. The bottleneck (small
+latent dimension) forces the encoder to capture essential information. Autoencoders discover structure
+without labels.
+
+VAEs add probabilistic structure. The encoder outputs parameters of a posterior distribution q(z|x),
+not point estimates. Sampling latent codes introduces stochasticity. The decoder models the reconstruction
+distribution p(x|z). The objective combines reconstruction loss (decoder quality) and KL divergence
+(encoder closeness to prior).
+
+The evidence lower bound (ELBO) decomposes into reconstruction and KL terms. Minimising KL pushes the
+posterior toward the prior N(0, I), encouraging smooth latent space. The reparameterisation trick enables
+backpropagation through sampling: z = μ + σ ⊙ ε, where ε ~ N(0, I).
+
+A smooth latent space enables generation: sampling from the prior z ~ N(0, I) and decoding produces
+realistic samples. Interpolation between codes produces smooth transitions. VAEs thus enable both
+compression and generation.
+
+β-VAE increases the KL weight β > 1. Stronger KL regularisation encourages disentanglement: latent
+factors become interpretable, each capturing a distinct data property (colour, size, rotation).
+
+Hierarchical VAEs use multiple stacked latent layers. Ladder variational autoencoders have skip connections
+improving posterior accuracy. Sequential VAEs model temporal structure in videos.
+
+Drawbacks: reconstructions are often blurry (probabilistic reconstruction with finite capacity). VAE
+likelihoods are oft difficult to estimate. Despite this, VAEs remain valuable for interpretable,
+disentangled representation learning.
+
+Applications: representation learning, data compression, anomaly detection, and controlled generation
+(by manipulating latent codes). VAEs excel where interpretability matters; diffusion models surpass VAEs
+in generation quality.
+""",
+    ),
+    (
+        "Chapter 29 – Diffusion Models for Generative Modeling",
+        """
+Diffusion models add noise to images step-by-step, then learn to reverse this process. Beginning from
+pure noise, the model gradually denoises to produce realistic images. Diffusion models now dominate
+generative modeling, outperforming GANs and VAEs in quality and stability.
+
+Forward process (diffusion): Images are gradually corrupted by adding small amounts of Gaussian noise
+over T steps. x_t = √(ᾱ_t) x_0 + √(1 - ᾱ_t) ε, where ᾱ_t is a schedule of noise levels, ε ~ N(0, I).
+After many steps, x_T is nearly pure noise.
+
+Reverse process (denoising): The model learns to reverse diffusion, predicting the added noise at each
+step. Training minimises the difference between predicted and actual noise: ||ε - ε_θ(x_t, t)||².
+This is simpler than image reconstruction and enables better gradient flow.
+
+Inference: Start with x_T ~ N(0, I), iteratively denoise for T steps, producing x_0. This is slow
+compared to GANs and VAEs (100s-1000s of steps) but more stable.
+
+DDPM (Denoising Diffusion Probabilistic Models) introduced the framework. Variance schedules control
+noise progression. Predetermined schedules (linear, square root) or learnable schedules optimise training.
+
+Stable Diffusion and DALL-E 2 dominate text-to-image generation. They condition on text embeddings
+(CLIP), enabling text-to-image synthesis. Classifier-free guidance enables high-quality generation
+without training separate classifiers.
+
+Score-based models learn gradients of log probability rather than adding noise directly. Score matching
+trains the model to match data score. Stochastic differential equations (SDEs) generalise diffusion and
+score matching. These offer cleaner mathematics and connect to existing theory.
+
+Sampling speed is addressed via fast samplers (DDIM, DPM-Solver) and distillation. Distillation
+compresses 1000 steps into 10-20 steps with minimal quality loss. Latent diffusion (diffusing in
+learned latent space rather than pixel space) accelerates training and sampling.
+
+Advantages: Stable training (no adversarial dynamics), high-quality generation, flexible conditioning
+(class, text, images), and strong theoretical foundation.
+
+Disadvantages: Slow sampling, high training cost, and sequential sampling incompatible with parallelisation.
+
+Applications: image generation, image editing, video generation, audio generation, and 3D shape synthesis.
+""",
+    ),
+    (
+        "Chapter 30 – Multi-task Learning",
+        """
+Multi-task learning trains a single model on multiple related tasks simultaneously. Shared representations
+improve generalisation, especially when individual tasks have limited data. Task diversity provides a
+regularisation effect: features useful for one task may hurt another, preventing overfitting.
+
+Shared representations: early layers learn shared features; task-specific layers learn task-specific
+transformations. Sharing is automatic in a single neural network with task-specific heads. Weight sharing
+provides inductive bias that tasks are related.
+
+Hard parameter sharing: early layers shared, late layers task-specific. Soft parameter sharing: all
+parameters are task-specific, but regularisation encourages similarity (e.g., L2 distance between
+task-specific weights).
+
+Task selection/scheduling: some tasks may dominate during training. Curriculum learning introduces
+easy tasks early, then harder tasks. Uncertainty weighting assigns weights based on task uncertainty:
+tasks with higher aleatoric uncertainty receive lower weight. This automatically balances tasks.
+
+Cross-task transfer: learning task A improves performance on task B. Positive transfer helps; negative
+transfer hurts. Task relationships affect transfer. Semantically related tasks (vision tasks on related
+datasets) transfer well. Dissimilar tasks may interfere.
+
+Hierarchical multi-task learning uses task structure. If tasks form a hierarchy (e.g., coarse to fine
+classification), early layers learn coarse structure; later layers specialise. Auxiliary tasks (predicting
+intermediate representations, data properties) improve primary task learning.
+
+Adversarial multi-task learning: task-specific representations try to fool a task confusion module
+(adversary), preventing task-specific information from leaking. This encourages task-invariant representations.
+
+Applications: computer vision (multiple object classes, related datasets), NLP (POS tagging, NEP, parsing
+jointly improve each other), recommendation systems (predicting rating, click, dwell time jointly), and
+medical imaging (diagnosing multiple diseases jointly improves accuracy).
+
+Challenges: negative transfer (task interference), task reweighting (which tasks matter more?), and
+generalising to new tasks (often requires task-specific fine-tuning).
+""",
+    ),
+    (
+        "Chapter 31 – Federated Learning",
+        """
+Federated learning trains models across many distributed devices (phones, edge servers) while keeping
+data local. This enables privacy-preserving learning at scale.
+
+Traditional ML centralises data at a server. Federated learning brings computation to data: model updates
+are computed locally, then aggregated at a central server. Updated global models are sent back to clients.
+
+Differential privacy: the aggregation process adds noise such that individual datapoints cannot be
+reconstructed. Local differential privacy adds noise at clients before sending updates; central differential
+privacy adds noise at the server. Privacy-utility tradeoff: stronger privacy requires more noise.
+
+Federated averaging (FedAvg): clients train locally for E epochs, then the server averages parameters.
+This is efficient (fewer communication rounds) but diverges from centralised training if local data lacks
+diversity (non-IID—non-independent and identically distributed).
+
+Non-IID data is a challenge. Clients have different data distributions; averaging parameters from divergent
+local optima may not converge to good global optima. Partial client participation: not all clients
+participate in each round; stragglers (slow clients) are excluded.
+
+Communication efficiency: model updates are often high-dimensional; communication is expensive. Gradient
+compression (quantisation, sparsification) reduces message size. Some updates matter more; only top-k
+updates are communicated.
+
+Personalised federated learning adapts global models to client distributions. Meta-learning enables fast
+adaptation. Transfer learning reuses global features, clients fine-tune. Multi-task learning treats each
+client as a task.
+
+Applications: mobile keyboards (Gboard), recommendation systems (YouTube), health (federated learning on
+medical data without breaching privacy), and IoT.
+
+Private deep learning: trusted execution environments (TEEs) and secure multiparty computation (MPC)
+enable private training beyond differential privacy, though at computational cost.
+
+Challenges: communication overhead (clients must frequently sync), Non-IID data, heterogeneous devices
+(varying compute/bandwidth), and verifying correctness without seeing private data.
+""",
+    ),
+    (
+        "Chapter 32 – Explainable AI (XAI)",
+        """
+As AI systems influence critical decisions (medicine, criminal justice, finance), understanding why
+models predict what they do is essential. Explainable AI (XAI) sheds light on model decision-making.
+
+Interpretable models are inherently transparent. Linear models: predictions are weighted sums of features,
+so feature weights directly explain predictions. Decision trees split on features; paths from root to leaf
+explain decisions. Rule-based systems use human-readable rules.
+
+Complex models (neural networks, random forests, gradient boosting) are treated as black boxes.
+Post-hoc explanations approximate local behaviour to explain specific predictions.
+
+LIME (Local Interpretable Model-agnostic Explanations): around a specific instance, fit a local linear
+model. This linear model is interpretable; its weights explain which features matter for the prediction.
+LIME is model-agnostic (works with any model) but requires careful sampling.
+
+SHAP (SHapley Additive exPlanations): uses game theory (Shapley values) to assign each feature a credit
+for the prediction. A features' Shapley value is its average marginal contribution across feature orderings.
+SHAP provides theoretical guarantees (local accuracy, consistency) and is model-agnostic.
+
+Saliency maps: backpropagation through a neural network computes gradients of the output w.r.t. inputs.
+Large gradients indicate which input pixels affect the prediction most. Saliency maps highlight regions the
+model attends to.
+
+Attention mechanisms are interpretably transparent: attention weights show which inputs the model focuses
+on. Transformer attention heads often capture linguistic structure; analysing attention reveals learned
+patterns.
+
+Feature importance: permutation importance measures how much a feature contributes by shuffling and
+observing performance drop. Ablation studies remove features and measure impact. Influence functions
+identify training examples most influential for a prediction.
+
+Concept activation vectors (CAVs): identify directions in hidden spaces that align with human concepts
+(e.g., "striped-ness" in image models). Testing sensitivity to concepts reveals if models use human
+concepts or spurious correlations.
+
+Adversarial examples: small, imperceptible perturbations flip predictions. Explanations through adversarial
+examples reveal fragilities. Robustness certification proves models' resistance to perturbations.
+
+Challenges: most explanation methods lack strong theoretical guarantees, comparisons are difficult,
+and explanations can be misleading (explaining arbitrary decisions confidently). XAI is an active,
+evolving research area.
 """,
     ),
 ]

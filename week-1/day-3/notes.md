@@ -89,8 +89,91 @@ report.md               → Final evaluation report (generated at runtime)
 ### Two-Model Comparison
 
 - **LLM-A** (`llama-3.1-8b-instant`) — smaller, faster model
-- **LLM-B** (`llama3-70b-8192`) — larger, more capable model
+- **LLM-B** (`openai/gpt-oss-120b`) — larger, faster and more capable model
 - Both run at `temperature=0` for reproducibility
+
+## Important Document Feeding Strategies
+
+When querying an LLM about a large document (e.g., a 50+ pages PDF), you have to decide _how_ to pass that document to the model. Two common strategies are described below.
+
+---
+
+### Strategy A — Naive Stuffing (Send the Entire Document)
+
+**What it does:** Extract all text from the PDF and paste the entire thing into a single prompt as context or provide the document directly to the LLM (depend on the Model you're using).
+
+**Why it seems attractive:** Simple to implement — no chunking logic, no information loss, the model sees everything. But it often can lead to truncation failures like loss of context at the beginning or end.
+
+**Why it fails on Groq Free Tier:**
+
+Groq free tier enforces a **Tokens Per Minute (TPM)** limit per model. For example, `openai/gpt-oss-120b` allows only **8,000 TPM**. The expanded `ai_foundations.pdf` (69 KB, 32 chapters) produces roughly **14,000–17,000 tokens** of extracted text. Sending it in a single prompt immediately exceeds the TPM limit and returns this error:
+
+```
+Request too large for model openai/gpt-oss-120b in organization ...
+Limit 8000, Requested 14339, please reduce your message size and try again.
+```
+
+Even if the limit were not an issue, most models have a **context window ceiling** (e.g., 8k, 32k, 128k tokens). Stuffing an entire document pushes against that ceiling, leaving little room for the answer.
+
+**Summary of problems with Naive Stuffing:**
+
+| Problem                 | Detail                                                                  |
+| ----------------------- | ----------------------------------------------------------------------- |
+| TPM exceeded            | Groq free tier rejects requests larger than the per-minute token budget |
+| Context window pressure | Large context leaves less room for generation; model may truncate       |
+| Higher latency & cost   | More tokens = slower response and higher API cost                       |
+| Irrelevant noise        | Unrelated chapters dilute the signal; model may get confused            |
+
+---
+
+### Strategy B — Map-Reduce Summarization
+
+**What it does:** Instead of sending the whole document at once, split it into chapters (chunks), summarise each chunk independently, then combine the summaries and answer the question from the combined summary.
+
+**The two phases:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  MAP phase  (one API call per chunk)                            │
+│                                                                 │
+│  Chapter 1 text  ──► LLM ──► bullet-point summary 1            │
+│  Chapter 2 text  ──► LLM ──► bullet-point summary 2            │
+│  ...                                                            │
+│  Chapter N text  ──► LLM ──► bullet-point summary N            │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼  combine all summaries
+┌─────────────────────────────────────────────────────────────────┐
+│  REDUCE phase  (one final API call)                             │
+│                                                                 │
+│  Combined summaries + Question  ──► LLM ──► Final Answer        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Why this works within rate limits:**
+
+- Each individual MAP call sends only **one chapter at a time** (~400–800 tokens), well within the TPM budget.
+- Each summary is compressed to 3–5 bullet points (~150–200 tokens).
+- The REDUCE call receives only the _summaries_ (not the raw text), so the combined prompt stays small.
+
+**Trade-off:** Information can be lost during the MAP summarisation step. If the answer to a question is a very specific detail that the summariser omits (e.g., a precise figure or statistic buried in a paragraph), the REDUCE step will correctly say the information is not present — even though it was in the original document. This is preferable to hallucinating an answer.
+
+**Implementation:** See `week-1/day-2/context_window_experiment.py` → `strategy_summarize()` function.
+
+---
+
+### Comparison
+
+|                           | Naive Stuffing                       | Map-Reduce Summarization                 |
+| ------------------------- | ------------------------------------ | ---------------------------------------- |
+| **TPM usage**             | One large request → may exceed limit | Many small requests → stays within limit |
+| **Implementation**        | Trivial                              | Moderate (chunking + two-stage calls)    |
+| **Information retention** | Full (if fits in context)            | Partial (summarisation may lose details) |
+| **Latency**               | Single round-trip                    | Multiple round-trips (MAP + REDUCE)      |
+| **Cost**                  | One call                             | Multiple calls (higher total tokens)     |
+| **Best suited for**       | Small docs on paid/high-limit tiers  | Large docs on free/rate-limited tiers    |
+
+---
 
 ## Observations
 
@@ -98,6 +181,8 @@ report.md               → Final evaluation report (generated at runtime)
 - Unanswerable questions reveal hallucination tendencies
 - Lexical metrics (EM, F1, BLEU) can underestimate quality for paraphrased correct answers
 - LLM-as-Judge is the most human-aligned metric but adds cost and latency
+- Naive Stuffing is the simplest strategy but breaks under Groq free-tier TPM limits for large PDFs
+- Map-Reduce Summarization trades some information fidelity for reliable operation within rate limits
 
 ## Files
 

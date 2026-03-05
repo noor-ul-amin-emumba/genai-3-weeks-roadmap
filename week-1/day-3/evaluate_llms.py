@@ -28,7 +28,7 @@ import json
 import math
 import re
 import sys
-import time
+from pypdf import PdfReader
 from collections import Counter
 from pathlib import Path
 from datetime import datetime
@@ -69,10 +69,6 @@ TEMPERATURE = 0  # Deterministic
 
 def extract_pdf_text(pdf_path: Path, max_chars: int = 30_000) -> str:
     """Extract plain text from a PDF file using pypdf."""
-    try:
-        from pypdf import PdfReader
-    except ImportError:
-        raise ImportError("pypdf is required. Run: pip install pypdf")
 
     reader = PdfReader(str(pdf_path))
     pages_text = []
