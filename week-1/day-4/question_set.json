@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "question": "Who organised the Dartmouth Conference in 1956 where the field of AI was formally founded?",
+    "ground_truth": "The Dartmouth Conference was organised by John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI History",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 2,
+    "question": "What is the Turing Test and who proposed it?",
+    "ground_truth": "The Turing Test was proposed by Alan Turing in 1950 as a measure of machine intelligence. A machine passes the test if a human evaluator cannot reliably distinguish its responses from those of a human.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Fundamentals",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 3,
+    "question": "What are the three key factors that drove the modern AI renaissance since 2010?",
+    "ground_truth": "The three key factors are: the availability of massive datasets, dramatic improvements in computing hardware (especially GPUs), and breakthroughs in deep learning algorithms.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI History",
+    "chapter": "Chapter 1"
+  },
+  {
+    "id": 4,
+    "question": "What is the difference between supervised learning and unsupervised learning?",
+    "ground_truth": "Supervised learning trains a model on labelled data where every input is paired with a correct output, and the model learns to generalise to unseen data. Unsupervised learning finds hidden patterns in unlabelled data without using pre-defined labels.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Machine Learning",
+    "chapter": "Chapter 2"
+  },
+  {
+    "id": 5,
+    "question": "What is overfitting and what are some techniques to mitigate it?",
+    "ground_truth": "Overfitting occurs when a model memorises training data and fails to generalise. Mitigation techniques include L1/L2 regularisation, dropout, batch normalisation, early stopping, and data augmentation.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Machine Learning",
+    "chapter": "Chapter 2"
+  },
+  {
+    "id": 6,
+    "question": "What architecture was introduced in the paper 'Attention Is All You Need' and what is its key mechanism?",
+    "ground_truth": "The Transformer architecture was introduced in 'Attention Is All You Need' by Vaswani et al. in 2017. Its key mechanism is self-attention, which models long-range dependencies efficiently in parallel by computing pairwise interactions between all tokens in a sequence.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Deep Learning",
+    "chapter": "Chapter 3"
+  },
+  {
+    "id": 7,
+    "question": "What are the two pretraining objectives used by BERT?",
+    "ground_truth": "BERT uses masked language modelling (MLM) and next-sentence prediction (NSP) as pretraining objectives.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "NLP",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 8,
+    "question": "What is Retrieval-Augmented Generation (RAG) and what problem does it address?",
+    "ground_truth": "Retrieval-Augmented Generation (RAG) combines a retrieval component that fetches relevant documents from a knowledge base with a generative LLM that synthesises an answer grounded in those documents. It reduces hallucinations and allows the model to access up-to-date information without retraining.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "NLP",
+    "chapter": "Chapter 4"
+  },
+  {
+    "id": 9,
+    "question": "What breakthrough in object detection does the YOLO model represent?",
+    "ground_truth": "YOLO (You Only Look Once) is a single-stage object detector that processes the whole image in one forward pass, trading some accuracy for speed. It is preferred for real-time applications.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "Computer Vision",
+    "chapter": "Chapter 5"
+  },
+  {
+    "id": 10,
+    "question": "What is the EU AI Act and when was it established?",
+    "ground_truth": "The EU AI Act (2024) is a regulatory framework that establishes risk-based categories for AI systems, classifying them by potential harm and imposing obligations accordingly.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Ethics",
+    "chapter": "Chapter 6"
+  },
+  {
+    "id": 19,
+    "question": "What was the significance of AlphaFold 2 developed by DeepMind in 2020?",
+    "ground_truth": "AlphaFold 2 predicted the 3D structures of nearly all known proteins, which was a breakthrough for drug discovery.",
+    "source_pdf": "ai_foundations.pdf",
+    "answerable": true,
+    "category": "AI Applications",
+    "chapter": "Chapter 7"
+  },
+  {
+    "id": 21,
+    "question": "What is the exact market capitalisation of the global AI industry in 2024?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 22,
+    "question": "What is the name of the specific neural network architecture used by DeepMind in AlphaGo to master the game of Go?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 23,
+    "question": "Which country was the first to reach net-zero carbon emissions as of 2023?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 24,
+    "question": "What is the exact number of parameters in the GPT-4 model?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  },
+  {
+    "id": 25,
+    "question": "What specific programming language was used to implement the first version of Word2Vec?",
+    "ground_truth": "NOT IN DOCUMENTS",
+    "source_pdf": "none",
+    "answerable": false,
+    "category": "Unanswerable",
+    "chapter": "N/A"
+  }
+]
