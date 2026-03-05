@@ -43,7 +43,7 @@ config = importlib.import_module("config")
 call_llm = config.call_llm
 
 DAY_DIR = Path(__file__).parent
-TEST_SET_PATH = DAY_DIR / "test_set.json"
+QUESTION_SET_PATH = DAY_DIR / "question_set.json"
 PDF_AI = DAY_DIR / "ai_foundations.pdf"
 PDF_CLIMATE = DAY_DIR / "climate_change.pdf"
 RAW_RESULTS_PATH = DAY_DIR / "results_raw.json"
@@ -293,7 +293,7 @@ def query_model(model_id: str, context: str, question: str, answerable: bool) ->
 
 def run_evaluation():
     # 1. Load test set
-    with open(TEST_SET_PATH, encoding="utf-8") as f:
+    with open(QUESTION_SET_PATH, encoding="utf-8") as f:
         test_set = json.load(f)
 
     # 2. Extract PDF texts
