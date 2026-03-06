@@ -205,3 +205,15 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# .github, .agent, .agents, .claude, .kiro, .trae
+.github/
+.agent/
+.agents/
+.claude/
+.kiro/
+.trae/
+
+
+# Agent Skills
+skills-lock.json

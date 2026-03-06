@@ -5,3 +5,4 @@ tiktoken>=0.7.0
 pypdf>=4.0.0
 reportlab>=4.0.0
 sentence-transformers>=3.0.0
+langchain>=1.2.10
