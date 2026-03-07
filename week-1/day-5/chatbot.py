@@ -30,7 +30,7 @@ Alternative retrieval strategies:
 
 Configurable in settings.py:
 - TOP_K: Number of chunks to retrieve (default: 4)
-- EMBEDDING_MODEL: Which embedding model to use (default: all-MiniLM-L6-v2)
+- EMBEDDING_MODEL: Which embedding model to use (default: sentence-transformers/all-mpnet-base-v2)
 
 USAGE:
 python chatbot.py              # Normal mode (no context shown)
@@ -85,7 +85,7 @@ class ResumeRAGChatbot:
 
         RETRIEVAL SETUP (Similarity Search Strategy):
 
-        1. Embeddings: HuggingFaceEmbeddings (all-MiniLM-L6-v2)
+        1. Embeddings: HuggingFaceEmbeddings (sentence-transformers/all-mpnet-base-v2)
            - Same model used in ingest.py for consistency
            - Converts queries into 384-d vectors
 
@@ -160,7 +160,7 @@ Question:
         RETRIEVAL FLOW (Similarity Search Strategy):
 
         1. EMBED: Convert question into vector using HuggingFaceEmbeddings
-           - Uses all-MiniLM-L6-v2 model (same as chunk embeddings)
+           - Uses sentence-transformers/all-mpnet-base-v2 model (same as chunk embeddings)
            - Produces 384-dimensional vector
 
         2. SEARCH: Query Chroma for TOP_K most similar chunks
@@ -280,7 +280,7 @@ Question:
             print(f"[Chunk {i}] Similarity: {score:.4f} |{bar}|")
             print(f"From page {doc.metadata.get('page', 'unknown')}:")
             print(
-                f"  {doc.page_content[:200]}{'...' if len(doc.page_content) > 200 else ''}")
+                f"  {doc.page_content}")
             print()
 
         print("=" * 80)

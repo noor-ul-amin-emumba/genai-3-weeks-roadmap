@@ -35,7 +35,7 @@ Configurable in settings.py:
 from __future__ import annotations
 
 from langchain_chroma import Chroma
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, WebBaseLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -74,7 +74,7 @@ class ResumeIndexer:
     def __init__(self) -> None:
         """Initialize embedder (lazy-loads model on first use).
 
-        Uses HuggingFaceEmbeddings with all-MiniLM-L6-v2:
+        Uses HuggingFaceEmbeddings with sentence-transformers/all-mpnet-base-v2:
         - Lightweight model (~22M parameters)
         - Fast inference (~100 embeddings/sec on CPU)
         - 384-dimensional vectors (good semantic quality)
@@ -90,6 +90,28 @@ class ResumeIndexer:
         loader = PyPDFLoader(str(RESUME_PATH))
         docs = loader.load()
         print(f"Loaded {len(docs)} PDF page(s) from: {RESUME_PATH.name}")
+        return docs
+
+    def load_web_documents(self, url):
+        """Load documents from a web page URL.
+
+        This method is not used in the current indexing pipeline but can be
+        useful for future extensions where you want to index online content
+        instead of (or in addition to) a local PDF.
+
+        Uses WebBaseLoader to fetch and parse the web page content into
+        LangChain Document objects. The same chunking and embedding logic
+        can then be applied to these documents.
+
+        Args:
+            url: The URL of the web page to load
+        Returns:
+            List of Document objects containing the web page content
+        """
+
+        loader = WebBaseLoader(url)
+        docs = loader.load()
+        print(f"Loaded {len(docs)} document(s) from URL: {url}")
         return docs
 
     def split_documents(self, docs):
@@ -126,7 +148,7 @@ class ResumeIndexer:
 
         EMBEDDING & STORAGE STRATEGY:
 
-        Embedding Model: Sentence Transformers (all-MiniLM-L6-v2)
+        Embedding Model: Sentence Transformers (sentence-transformers/all-mpnet-base-v2)
         - Lightweight, fast embedding model (only 22M parameters)
         - Converts text chunks into 384-dimensional dense vectors
         - These vectors capture semantic meaning of text
@@ -155,8 +177,18 @@ class ResumeIndexer:
         return vector_store
 
     def run(self) -> None:
+
+        # docs = self.load_web_documents(
+        #     "https://my-portfolio-alpha-ashen-31.vercel.app/")
+
         docs = self.load_documents()
         chunks = self.split_documents(docs)
+        # print chunks with metadata for debugging
+        for i, chunk in enumerate(chunks):  # Print first 3 chunks
+            print(f"\nChunk {i+1}:")
+            # Print first 200 chars
+            print(f"Text: {chunk.page_content}")
+            print(f"Metadata: {chunk.metadata}")
         self.build_vector_store(chunks)
         print("Indexing complete. You can now run chatbot.py")
 

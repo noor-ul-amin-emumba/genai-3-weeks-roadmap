@@ -26,7 +26,7 @@ COLLECTION_NAME = os.getenv("RAG_COLLECTION", "profile-rag")
 # Model choices
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 EMBEDDING_MODEL = os.getenv(
-    "EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+    "EMBEDDING_MODEL", "sentence-transformers/sentence-transformers/all-mpnet-base-v2")
 
 # Chunking + retrieval settings
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "800"))
