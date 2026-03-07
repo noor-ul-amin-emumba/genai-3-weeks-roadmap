@@ -40,6 +40,7 @@ python chatbot.py --show-context  # Show retrieved chunks for each query
 from __future__ import annotations
 
 import argparse
+import json
 from typing import Iterable
 import os
 import sys
@@ -279,7 +280,7 @@ Question:
             print(f"[Chunk {i}] Similarity: {score:.4f} |{bar}|")
             print(f"From page {doc.metadata.get('page', 'unknown')}:")
             print(
-                f"  {doc.page_content[:120]}{'...' if len(doc.page_content) > 120 else ''}")
+                f"  {doc.page_content[:200]}{'...' if len(doc.page_content) > 200 else ''}")
             print()
 
         print("=" * 80)
