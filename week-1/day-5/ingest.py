@@ -92,28 +92,6 @@ class ResumeIndexer:
         print(f"Loaded {len(docs)} PDF page(s) from: {RESUME_PATH.name}")
         return docs
 
-    def load_web_documents(self, url):
-        """Load documents from a web page URL.
-
-        This method is not used in the current indexing pipeline but can be
-        useful for future extensions where you want to index online content
-        instead of (or in addition to) a local PDF.
-
-        Uses WebBaseLoader to fetch and parse the web page content into
-        LangChain Document objects. The same chunking and embedding logic
-        can then be applied to these documents.
-
-        Args:
-            url: The URL of the web page to load
-        Returns:
-            List of Document objects containing the web page content
-        """
-
-        loader = WebBaseLoader(url)
-        docs = loader.load()
-        print(f"Loaded {len(docs)} document(s) from URL: {url}")
-        return docs
-
     def split_documents(self, docs):
         """Split documents into chunks using Recursive Character Splitting.
 
@@ -177,9 +155,6 @@ class ResumeIndexer:
         return vector_store
 
     def run(self) -> None:
-
-        # docs = self.load_web_documents(
-        #     "https://my-portfolio-alpha-ashen-31.vercel.app/")
 
         docs = self.load_documents()
         chunks = self.split_documents(docs)
